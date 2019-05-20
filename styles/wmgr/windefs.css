@@ -1,0 +1,120 @@
+.genericWindow {
+  background-color: #3c3c3c;
+  position: absolute;
+  -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  border-radius: 5px;
+  border: 1px solid #565555;;
+
+  display: flex;
+  flex-direction: column;
+  padding: 2px;  
+}
+
+.dialogWindow {
+  background-color: var(--main-window-content);
+  position: absolute;
+  -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  border-radius: 5px;
+  border: 1px solid #807f7f;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0px;  
+}
+
+.desktopWidget {
+  background-color: var(--main-window-content);
+  position: absolute;
+  border-radius: 5px;
+  border: 1px solid #656363;
+
+  -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);  
+
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+
+  color: #ffffff;
+}
+
+.windowContent {
+  color: var(--main-window-text);
+  margin: 2px;
+  background: var(--main-window-content);
+  border: 1px inset #717171;
+  flex: 2;
+  display: flex; 
+  padding: 2px;
+}
+
+.dialogContent {
+  color: var(--main-window-text);
+  margin: 2px;
+  flex: 2;
+  display: flex; 
+  padding: 2px;
+}
+
+.macribbon {
+  margin: 2px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: var(--main-window-title);
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  color: #fff;
+  font-size: 8pt;
+}
+
+.widgetribbon {
+  margin: 2px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #fff;
+  font-size: 8pt;
+  border-bottom: 1px solid #656464;
+}
+
+.statusbar {
+  margin: 0px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  color: #c5c5c5;
+  font-size: 8pt;
+}
+
+.dialogControls {
+  margin: 2px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #fff;
+  font-size: 8pt;
+  text-align: center;
+}
+
+.standardCloseButton {
+  float: right;
+  padding: 0px;
+  margin: 2px;
+  height: 12px;  
+}
+
+.standardCloseButton > svg:hover {
+  fill: #DA4567;
+}

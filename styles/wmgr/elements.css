@@ -1,0 +1,42 @@
+time {
+  font-size: 16pt;	
+  line-height: 16pt;
+}
+
+.stackVertical {
+  display: flex;
+  flex-direction: column;	
+}
+
+.stackRow {
+  flex: 2;
+  display: flex;
+  margin: 4px;
+  padding: 1px;
+}
+
+.stackRowTight {
+  line-height: 10pt;
+}
+
+.separator {
+  background: #9a9696;
+  height: 1px;
+  margin: 0px 4px 4px 4px;
+}
+
+.fixedLabel {
+  font-size: 8pt;
+  line-height: 8pt;
+  color: var(--main-label);
+  padding: 2px;
+  margin: 2px;
+}
+
+.fixedLabelLarge {
+  font-size: 12pt;
+  line-height: 12pt;
+  color: var(--main-label);
+  padding: 2px;
+  margin: 2px;
+}

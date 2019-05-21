@@ -163,6 +163,58 @@ class WindowedApp extends React.Component {
   /**
    *
    */
+  addMapWindow () {
+    console.log ("addMapWindow ()");
+    this.addWindow (<ComposableMap
+      projectionConfig={{
+        scale: 205,
+        rotation: [-11,0,0],
+      }}
+      width={980}
+      height={551}
+      style={{
+        width: "100%",
+        height: "auto",
+        background: "#353535"
+      }}
+      >
+      <ZoomableGroup center={[0,20]} disablePanning>
+        <Geographies geography="../static/world-50m.json">
+          {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
+            <Geography
+              key={i}
+              geography={geography}
+              projection={projection}
+              style={{
+                default: {
+                  fill: "#585a5a",
+                  stroke: "#8b8c8c",
+                  strokeWidth: 0.75,
+                  outline: "none",
+                },
+                hover: {
+                  fill: "#818686",
+                  stroke: "#ffffff",
+                  strokeWidth: 0.75,
+                  outline: "none",
+                },
+                pressed: {
+                  fill: "#FF5722",
+                  stroke: "#607D8B",
+                  strokeWidth: 0.75,
+                  outline: "none",
+                },
+              }}
+            />
+          ))}
+        </Geographies>
+      </ZoomableGroup>
+   </ComposableMap>);
+  }  
+
+  /**
+   *
+   */
   addAnonymousDialog () {
     console.log ("addAnonymousDialog ()");
     this.addDialog (<WindowContent label={"Window: [" + this.state.windowIndex +"]"} />);
@@ -229,6 +281,45 @@ class WindowedApp extends React.Component {
    */
   render() {
     let windows=[];
+    const options = {
+      title: "Age vs. Weight comparison",
+      hAxis: { title: "Age", viewWindow: { min: 0, max: 15 } },
+      vAxis: { title: "Weight", viewWindow: { min: 0, max: 15 } },
+      legend: "none",
+      hAxis: {
+        titleTextStyle: {color: '#607d8b'}, 
+        textStyle: { color: '#b0bec5', fontSize: '8', bold: true}
+      },
+      vAxis: {
+        titleTextStyle: {color: '#607d8b'}, 
+        textStyle: { color: '#b0bec5', fontSize: '8', bold: true}
+      },      
+      backgroundColor: 'transparent',
+      chartArea: {
+        'backgroundColor': {
+          'fill': '#444444',
+          'opacity': 100
+        }
+      },
+      series: {
+        0: { color: '#6f9654' },        
+        1: { color: '#e2431e' },
+        2: { color: '#e7711b' },
+        3: { color: '#f1ca3a' },
+        4: { color: '#1c91c0' },
+        5: { color: '#43459d' },
+      }
+
+    };
+    const data = [
+      ["Age", "Weight"],
+      [8, 12],
+      [4, 5.5],
+      [11, 14],
+      [4, 5],
+      [3, 3.5],
+      [6.5, 7]
+    ];
 
     for (var i=0;i<this.state.windowTemplates.length;i++) {
       let aTemplate=this.state.windowTemplates [i];
@@ -248,6 +339,7 @@ class WindowedApp extends React.Component {
       <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
       <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
       <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Modal Dialog</button><br/>
+      <button className="defaultButton" onClick={this.addMapWindow.bind(this)}>Add Map Window</button><br/>
       <br/>
       <button className="defaultButton">Button Default</button><br/>
       <button className="largeButton">Button Large</button><br/>
@@ -287,10 +379,7 @@ class WindowedApp extends React.Component {
            [7, 80, 77, 83, 70, 77, 85, 90],
            [8, 100, 90, 110, 85, 95, 102, 110],
          ]}
-         options={{
-           intervals: { style: 'sticks' },
-           legend: 'none',
-         }}
+         options={options}
         />
       </DesktopWidget>
 
@@ -298,82 +387,13 @@ class WindowedApp extends React.Component {
         <Chart
           width={300}
           height={300}
-          chartType="Line"
-          loader={<div>Loading Chart</div>}
-          data={[
-            [
-              'Day',
-              'Guardians of the Galaxy',
-              'The Avengers',
-              'Transformers: Age of Extinction',
-            ],
-            [1, 37.8, 80.8, 41.8],
-            [2, 30.9, 69.5, 32.4],
-            [3, 25.4, 57, 25.7],
-            [4, 11.7, 18.8, 10.5],
-            [5, 11.9, 17.6, 10.4],
-            [6, 8.8, 13.6, 7.7],
-            [7, 7.6, 12.3, 9.6],
-            [8, 12.3, 29.2, 10.6],
-            [9, 16.9, 42.9, 14.8],
-            [10, 12.8, 30.9, 11.6],
-            [11, 5.3, 7.9, 4.7],
-            [12, 6.6, 8.4, 5.2],
-            [13, 4.8, 6.3, 3.6],
-            [14, 4.2, 6.2, 3.4],
-          ]}
-          backgroundColor="#cccccc"
+          chartType="ScatterChart"
+          data={data}
+          options={options}
+          legendToggle
         />
       </DesktopWidget>  
-      
-      <DesktopWidget title="World Map" xPos={500} yPos={200}>      
-        <ComposableMap
-          projectionConfig={{
-            scale: 205,
-            rotation: [-11,0,0],
-          }}
-          width={980}
-          height={551}
-          style={{
-            width: "100%",
-            height: "auto",
-            background: "#353535"
-          }}
-          >
-          <ZoomableGroup center={[0,20]} disablePanning>
-            <Geographies geography="../static/world-50m.json">
-              {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
-                <Geography
-                  key={i}
-                  geography={geography}
-                  projection={projection}
-                  style={{
-                    default: {
-                      fill: "#585a5a",
-                      stroke: "#8b8c8c",
-                      strokeWidth: 0.75,
-                      outline: "none",
-                    },
-                    hover: {
-                      fill: "#818686",
-                      stroke: "#ffffff",
-                      strokeWidth: 0.75,
-                      outline: "none",
-                    },
-                    pressed: {
-                      fill: "#FF5722",
-                      stroke: "#607D8B",
-                      strokeWidth: 0.75,
-                      outline: "none",
-                    },
-                  }}
-                />
-              ))}
-            </Geographies>
-          </ZoomableGroup>
-       </ComposableMap>
-      </DesktopWidget>       
-
+          
       {windows}
     </div>);
   }

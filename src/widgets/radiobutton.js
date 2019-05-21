@@ -19,7 +19,7 @@ export class RadioButton extends React.Component {
   render () {
     return (<label className="radiocontainer">{this.props.children}
       <input type="radio" defaultChecked="checked" name="radio" />
-      <span className="checkmark"></span>
+      <span className="radiokmark"></span>
     </label>);
   }
 }

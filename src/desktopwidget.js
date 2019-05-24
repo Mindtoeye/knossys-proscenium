@@ -56,7 +56,7 @@ export class DesktopWidget extends React.Component {
     return (
     <div id={this.props.id} className="desktopWidget" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
       {titleElement}
-      <div className="dialogContent">
+      <div className="desktopWidgetContent">
         {this.props.children}
       </div>
       {labelElement}    

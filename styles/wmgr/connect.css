@@ -1,0 +1,75 @@
+
+.connectWindow {
+  width: 320px;
+  height: 320px;
+  background-color: #525252;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  border-radius: 5px;
+  border: 1px solid #6b6b6b;
+  color: #bbbbbb;
+}
+
+.connectLabel {
+ width: 160px;
+ display: block;
+ margin: auto;
+ font-size: 10pt;
+}
+
+.loaderStyle {
+  border: 0px solid grey;
+  margin: auto;
+  width: 220px;
+  height: 210px;
+  display: block;
+}
+
+.servicesBar {
+ width: 180px;
+ height: 36px;
+ display: block;
+ margin: auto;
+ border: 0px solid grey;
+ margin-bottom: 20px;
+}
+
+.serviceIcon {
+ float: left;
+ width: 32px;
+ height: 32px;
+ border: 0px solid grey;
+ margin: 2px;
+}
+
+.smallChaperone {
+  background: url("../images/knossys-chaperone.png");
+  opacity: 0.2;
+}
+
+.smallDB {
+  background: url("../images/knossys-db.png");
+  opacity: 0.2;  
+}
+
+.smallProscenium {
+  background: url("../images/knossys-proscenium.png");
+  opacity: 1;  
+}
+
+.smallMain {
+  background: url("../images/knossys-small.png");
+  opacity: 0.2;  
+}
+
+.smallSpark {
+  background: url("../images/knossys-spark.png");
+  opacity: 0.2;  
+}

@@ -37,7 +37,7 @@ export class DigitalClock extends React.Component {
       	  zones.push (<div key={"sep"+i} className="separator"/>);
       	}
 
-        zones.push(<div key={"label"+i} className="stackRow stackRowTight fixedLabelLarge">{zoneSplitter [0]}</div>);
+        zones.push(<div key={"label"+i} className="stackRow stackRowTight label">{zoneSplitter [0]}</div>);
 
         zones.push(<div key={"clock"+i} className="stackRow"><ClockDigital format={'HH:mm:ss'} ticking={true} timezone={zoneSplitter[1]} /></div>);
       }

@@ -1,0 +1,48 @@
+
+.loginWindow {
+  width: 320px;
+  height: 200px;
+  background-color: #525252;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
+  border-radius: 5px;
+  border: 1px solid #6b6b6b;
+  color: #bbbbbb;
+}
+
+.loginarea {
+  margin: 2px;
+  padding: 20px;
+}
+
+.textinput {
+  background: #757474;
+  border: 1px inset #9e9d9d;
+  padding: 4px;
+  margin: 4px;
+  color: #ffffff;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #555555;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #555555;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #555555;
+}
+
+.loginWindow .padding {
+  height: 25px;
+}

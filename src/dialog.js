@@ -56,7 +56,7 @@ export class Dialog extends React.Component {
         {this.props.children}
       </div>
       <div className="dialogControls">
-        <button className="defaultButton" onClick={() => this.props.deleteWindow(this.props.id)}>Ok</button>
+        <button className="largeButton" onClick={() => this.props.deleteWindow(this.props.id)}>Ok</button>
       </div>      
     </div>
     );

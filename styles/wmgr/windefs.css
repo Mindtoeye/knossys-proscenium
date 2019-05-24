@@ -1,3 +1,4 @@
+
 .genericWindow {
   background-color: #3c3c3c;
   position: absolute;
@@ -58,7 +59,13 @@
   color: var(--main-window-text);
   margin: 2px;
   flex: 2;
-  display: flex; 
+  display: flex;
+  padding: 2px;
+}
+
+.desktopWidgetContent {
+  color: var(--main-window-text);
+  margin: 2px;
   padding: 2px;
 }
 
@@ -116,6 +123,21 @@
   height: 12px;  
 }
 
-.standardCloseButton > svg:hover {
-  fill: #DA4567;
+.standardMaximizeButton {
+  float: right;
+  padding: 0px;
+  margin: 2px;
+  height: 12px;  
+}
+
+.standardCloseButton > svg:hover line {
+  float: right;
+  stroke: var(--main-highlight);
+  fill: var(--main-highlight);
+}
+
+.standardMaximizeButton > svg:hover line {
+  float: right;  
+  stroke: var(--main-highlight);
+  fill: var(--main-highlight);
 }

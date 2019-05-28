@@ -46,9 +46,16 @@ export class Dialog extends React.Component {
     let aWidth=this.props.width;
     let aHeight=this.props.height;
     let anIndex=this.state.index;
+    let className="dialogWindow";
+
+    if (this.props.centered) {
+      if (this.props.centered=="true") {
+        className="dialogWindow centered";
+      }
+    }
 
     return (
-    <div id={this.props.id} className="dialogWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+    <div id={this.props.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
       <div className="macribbon" onClick={() => this.props.popWindow(this.props.id)}>
         Knossys:{this.props.id}
       </div>

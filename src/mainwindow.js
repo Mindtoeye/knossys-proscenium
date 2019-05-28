@@ -25,11 +25,26 @@ import "../styles/wmgr/widgets/radiobutton.css";
 
 import "../styles/clock.scss";
 
+import knossys from '../styles/images/knossys.png';
+import settings from '../styles/images/icons/settings-icon.png';
+import fullscreen from '../styles/images/icons/fullscreen.png';
+
+import iconTaskmanager from '../styles/images/taskmanager.png';
+import iconCassandra from '../styles/images/cassandra.png';
+import iconSpark from '../styles/images/spark.png';
+import iconJob from '../styles/images/jobmanager.png';
+import iconAnalyze from '../styles/images/analyze.png';
+import iconCloudUpload from '../styles/images/cloudupload.png';
+import iconLogging from '../styles/images/logging.png';
+import iconWorkflow from '../styles/images/workflow.png';
+import iconFinite from '../styles/images/finite.png';
+
 import Version from "./version";
 import Window from "./window";
 import WindowContent from "./windowcontent";
 import Dialog from "./dialog";
 import DesktopWidget from "./desktopwidget";
+import DesktopPanel from "./desktoppanel";
 import Switch from "./widgets/switch";
 import ToggleButton from "./widgets/togglebutton";
 import RadioButton from "./widgets/radiobutton";
@@ -40,6 +55,7 @@ import TaskBar from "./taskbar";
 import Label from "./widgets/label";
 import DigitalClock from "./widgets/digitalclock";
 import Clock from './widgets/clock';
+import Dial from './widgets/dial';
 
 // https://www.npmjs.com/package/react-google-charts
 import Chart from 'react-google-charts';
@@ -65,6 +81,45 @@ class MainWindow extends React.Component {
    */
   constructor () {
     super();
+
+    this.state={
+      popupDialog: null,
+      globalSettings: {
+        showGrid: false
+      }
+    };
+  }
+
+  /**
+  *
+  */
+  componentDidMount () {
+    console.log ("componentDidMount");
+    setTimeout (() => {
+      this.refs.taskbar.addIcon (iconJob,"Submit Job","1","1");
+      this.refs.taskbar.addIcon (iconTaskmanager,"TaskManager","2","1");
+      this.refs.taskbar.addIcon (iconAnalyze,"View Results","3","1");
+      this.refs.taskbar.addSeparator ();
+      this.refs.taskbar.addIcon (iconWorkflow,"Pipeline","4","1");
+      this.refs.taskbar.addIcon (iconCloudUpload,"Data Upload","5","1");
+      this.refs.taskbar.addSeparator ();
+      this.refs.taskbar.addIcon (iconCassandra,"Data Store","6","1");
+      this.refs.taskbar.addIcon (iconSpark,"Spark Status","7","1");
+      this.refs.taskbar.addIcon (iconLogging,"Inspect Logs","8","1"); 
+      this.refs.taskbar.addIcon (iconFinite,"FSM Editor","9","1");  
+    },1000);
+  }
+
+  /**
+   *
+   */
+  popupDialog (aContent) {
+    this.setState (
+      <div id="scrim" className="scrim">
+        <Dialog ref={"dialog"} width={"320px"} height={"320px"} centered="true">
+        {aContent}
+        </Dialog>
+      </div>);
   }
 
   /**
@@ -75,6 +130,18 @@ class MainWindow extends React.Component {
   	if (this.props.onLogout) {
   	  this.props.onLogout ();
   	}
+  }  
+
+  /**
+   *
+   */
+  showGrid () {
+    console.log ("showGrid ()");
+    if (this.state.globalSettings.showGrid==false) {
+      this.setState ({globalSettings : {showGrid: true}});
+    } else {
+      this.setState ({globalSettings : {showGrid: false}});
+    }
   }  
 
   /**
@@ -156,6 +223,13 @@ class MainWindow extends React.Component {
   /**
    *
    */
+  onIconClicked (id) {
+    console.log ("onIconClicked ("+id+")");
+  }
+
+  /**
+   *
+   */
   render() {
     const options = {
       title: "Age vs. Weight comparison",
@@ -193,6 +267,7 @@ class MainWindow extends React.Component {
       }
 
     };
+
     const data = [
       ["Age", "Weight"],
       [8, 12],
@@ -203,14 +278,20 @@ class MainWindow extends React.Component {
       [6.5, 7]
     ];
 
+    let modalDialog=this.state.popupDialog;
+    let taskbar=this.state.taskbar;
+ 
     return (
-      <div className="desktopContainer">
+      <div id="desktop" className="desktopContainer">
+
         
-        <MenuBar onLogout={this.props.onLogout}/>
-        <WindowManager ref="desktop">
+        <MenuBar onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
 
 
-          <DesktopWidget title="UI Elements" xPos={700} yPos={50} width={400} height={250}>
+        <WindowManager ref="desktop" settings={this.state.globalSettings}>
+
+
+          <DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={250}>
             <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
             <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
             <button className="defaultButton" onClick={this.addModalDialog.bind(this)}>Add Modal Dialog</button><br/>
@@ -221,21 +302,25 @@ class MainWindow extends React.Component {
             <Switch />
             <ToggleButton /><br />
             <RadioButton /><br />
-          </DesktopWidget>        
+          </DesktopPanel>        
 
 
 
           <DesktopWidget title="Analog Clock" label="Local Time" xPos={300} yPos={50}>
-            <Clock/>
+            <Clock />
           </DesktopWidget>
+        
 
 
-          
           <DigitalClock title="Digital Clock" xPos={450} yPos={50} zones="Los Angeles:US/Pacific,New York:US/Eastern,Tokyo:Asia/Tokyo,Amsterdam:Europe/Amsterdam" />
 
 
 
-          <DesktopWidget title="Chart (Line)" xPos={300} yPos={350}>
+          <Dial title="Dial" label="Net Speed" xPos={50} yPos={420} />
+
+
+
+          <DesktopPanel title="Chart (Line)" xPos={300} yPos={400}>
             <Chart
              width={300}
              height={300}
@@ -263,11 +348,11 @@ class MainWindow extends React.Component {
              ]}
              options={options}
             />
-          </DesktopWidget>
+          </DesktopPanel>
 
 
 
-          <DesktopWidget title="Chart (error)" xPos={700} yPos={350}>
+          <DesktopPanel title="Chart (error)" xPos={700} yPos={400}>
             <Chart
               width={300}
               height={300}
@@ -276,17 +361,21 @@ class MainWindow extends React.Component {
               options={options}
               legendToggle
             />
-          </DesktopWidget>
+          </DesktopPanel>
 
 
 
-          <DesktopWidget title="Color Chooser" xPos={50} yPos={50}>
+          <DesktopPanel title="Color Chooser" xPos={50} yPos={50}>
             <SketchPicker />
-          </DesktopWidget>
+          </DesktopPanel>
 
         
         </WindowManager>
-        <TaskBar />      
+
+
+        <TaskBar ref="taskbar" onIconClicked={this.onIconClicked.bind(this)}/>
+
+        {modalDialog}
 
       </div>);
   }

@@ -21,7 +21,7 @@ export class Switch extends React.Component {
   	if (this.props.label) {
   	  label=this.props.label;
   	}
-    return (<div> <input className="tgl tgl-ios" id="cb2" type="checkbox"/><label className="tgl-btn" for="cb2"></label>{label}</div>);
+    return (<div> <input className="tgl tgl-ios" id="cb2" type="checkbox"/><label className="tgl-btn" htmlFor="cb2"></label>{label}</div>);
   }
 }
 

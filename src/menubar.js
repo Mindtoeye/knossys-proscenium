@@ -23,13 +23,14 @@ export default class MenuBar extends React.Component {
    */
   constructor(props) {
     super(props);
-      this.state = {
-    };
+
+    this.state = {};
 
     this.showAbout = this.showAbout.bind(this);
     this.showStatus = this.showStatus.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleFullscreen = this.handleFullscreen.bind(this);    
+    //this.showGrid = this.showGrid.bind(this);  
   }
 
   /**
@@ -53,6 +54,21 @@ export default class MenuBar extends React.Component {
       this.props.onShowStatus();
     }    
   }
+
+  /**
+   * 
+   */
+  showGrid () {
+    console.log ("showGrid ()");
+  
+    this.refs.dropdown.hide();
+
+    if (typeof this.props.showGrid === 'function') {
+      this.props.showGrid();
+    } else {
+      console.log ("Error: no show/hide grid method provided");
+    }
+  }  
   
   /**
    * 
@@ -127,6 +143,9 @@ export default class MenuBar extends React.Component {
                   </li>
                   <li>
                       <a href="#" onClick={this.showStatus}>System Status</a>
+                  </li>
+                  <li>
+                      <a href="#" onClick={this.showGrid.bind(this)}>Show Hide Grid</a>
                   </li>
                   <li>
                       <a href="#" onClick={this.handleLogout}>Log Out</a>

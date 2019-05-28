@@ -271,7 +271,7 @@ class WindowManager extends React.Component {
       let aTemplate=this.state.windowTemplates [i];
 
       if (aTemplate.type=="window") {
-        windows.push (<Window ref={"win"+aTemplate.index} id={aTemplate.index} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Window>);      
+        windows.push (<Window settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.index} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Window>);      
       }
 
       if (aTemplate.type=="dialog") {
@@ -283,7 +283,13 @@ class WindowManager extends React.Component {
       }      
     }
 
-    return (<div className="desktopContent">
+    let windowClass="desktopContent";
+
+    if (this.props.settings.showGrid==true) {
+      windowClass="desktopContent gridDots"
+    }
+
+    return (<div className={windowClass}>
         {this.props.children}
         {windows}
       </div>);

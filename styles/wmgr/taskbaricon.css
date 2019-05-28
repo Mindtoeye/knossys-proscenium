@@ -1,0 +1,75 @@
+
+.iconBaseMedium 
+{
+  width: 75px;
+  height: 62px;
+  padding: 4px;
+  border: 0px solid grey;
+}
+
+.iconBaseSmall
+{
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border: 0px solid grey;
+}
+
+.iconBaseMedium:hover 
+{
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #cccccc;
+
+  background: rgb(115, 115, 115);
+}
+
+.iconBaseSmall:hover 
+{
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #cccccc;
+
+  background: rgb(115, 115, 115);
+}
+  
+.iconFaceMedium
+{
+  width: 40px;
+  /*height: 40px;*/
+  padding: 0px;
+  border: 0px solid green;
+  margin: auto;
+  marginBottom: 2px;
+}
+
+.iconFaceSmall
+{
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  border: 0px solid green;
+  margin: auto;
+  marginBottom: 2px;
+}
+
+.iconLabel
+{
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 60%;
+  color: #ffffff;
+  background: #666666;
+  padding: 1px;
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #000000;
+  text-align: center;
+}
+
+.iconHover
+{
+	
+}

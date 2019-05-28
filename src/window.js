@@ -51,6 +51,8 @@ export class Window extends React.Component {
     let aHeight=this.props.height;
     let anIndex=this.state.index;
 
+    let windowContent = "windowContent";
+
     return (
     <div id={this.props.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
       <div className="macribbon" onClick={() => this.props.popWindow(this.props.id)}>
@@ -81,7 +83,7 @@ export class Window extends React.Component {
         </div>
                       
       </div>
-      <div className="windowContent">
+      <div className={windowContent}>
         {this.props.children}
       </div>
       <div className="statusbar">

@@ -1,13 +1,46 @@
 
-.taskbar {
-  height: 40px;
-
+.taskbarBar {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  background: rgb(73,73,73);
+  background: -moz-linear-gradient(top, rgba(73,73,73,1) 0%, rgba(64,64,64,1) 23%, rgba(73,73,73,1) 85%, rgba(73,73,73,1) 100%);
+  background: -webkit-linear-gradient(top, rgba(73,73,73,1) 0%,rgba(64,64,64,1) 23%,rgba(73,73,73,1) 85%,rgba(73,73,73,1) 100%);
+  background: linear-gradient(to bottom, rgba(73,73,73,1) 0%,rgba(64,64,64,1) 23%,rgba(73,73,73,1) 85%,rgba(73,73,73,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#494949', endColorstr='#494949',GradientType=0 );
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
   border: 1px solid #212121;
+  border-bottom: 0px solid black;
+  display: flex;
+  flex-direction: row;
+}
 
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#494949+0,404040+23,494949+85,494949+100 */
-  background: rgb(73,73,73); /* Old browsers */
-  background: -moz-linear-gradient(top, rgba(73,73,73,1) 0%, rgba(64,64,64,1) 23%, rgba(73,73,73,1) 85%, rgba(73,73,73,1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(73,73,73,1) 0%,rgba(64,64,64,1) 23%,rgba(73,73,73,1) 85%,rgba(73,73,73,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(73,73,73,1) 0%,rgba(64,64,64,1) 23%,rgba(73,73,73,1) 85%,rgba(73,73,73,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#494949', endColorstr='#494949',GradientType=0 ); /* IE6-9 */
+.taskbarVr {
+  width: 1px;
+  background-color: #292828;
+  /* height: 80%; */
+  float: left;
+  border: 2px ridge #737171;
+  border-radius: 2px;
+  margin: 5px;
+}
+
+.taskbarGripper {
+  position: fixed;
+  padding: 1px;
+  margin: 2px;
+  right: 0px;
+  width: 16px;
+  border: 1px inset #bdbdbd;
+  border-top-left-radius: 7px;
+  height: 100%;
+  background: #333333;
+}
+
+.taskbarGripperIconStyle {
+  padding: 1px;
+  /*margin: 2px;*/
+  float: right;   
 }

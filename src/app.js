@@ -10,11 +10,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import MainWindow from "./main";
+import MainWindow from "./mainwindow";
 import LoginDialog from "./login";
 import ConnectionDialog from "./connect";
 
 import "../styles/wmgr/darktheme.css";
+
+var tId=-1;
 
 /**
  * appState is one of:
@@ -31,8 +33,65 @@ class WindowedApp extends React.Component {
     super();
 
     this.state={
-      appState: 1
+      appState: 0,
+      appTimeout: 0,
+      serviceState : {
+        prosceniumEnabled: false,
+        chaperoneEnabled: false,
+        dbEnabled: false,
+        mainEnabled: false,
+        sparkEnabled: false
+      }
     }
+
+    tId=setInterval (() => {
+      let t=this.state.appTimeout;
+      let s=this.state.appState;
+      t++;
+
+      let prosceniumEnabled = false;
+      let chaperoneEnabled = false;
+      let dbEnabled = false;
+      let mainEnabled = false;
+      let sparkEnabled = false;
+
+      if (t>1) {
+        prosceniumEnabled = true;
+      }
+
+      if (t>2) {
+        chaperoneEnabled = true;
+      }    
+      
+      if (t>3) {
+        dbEnabled = true;
+      } 
+      
+      if (t>4) {
+        mainEnabled = true;
+      } 
+      
+      if (t>5) {
+        sparkEnabled = true;
+      }                     
+
+      if (t>7) {     
+        s=1;
+        clearInterval (tId);
+      }
+
+      this.setState ({
+        appState: s,
+        appTimeout: t,
+        serviceState : {
+          prosceniumEnabled: prosceniumEnabled,
+          chaperoneEnabled: chaperoneEnabled,
+          dbEnabled: dbEnabled,
+          mainEnabled: mainEnabled,
+          sparkEnabled: sparkEnabled
+        }            
+      });
+    },1000);
   }
 
   /**
@@ -57,7 +116,7 @@ class WindowedApp extends React.Component {
   render() {
 
     if (this.state.appState==0) {
-      return (<ConnectionDialog />);
+      return (<ConnectionDialog timeout={7-this.state.appTimeout} state={this.state.serviceState} />);
     }    
 
     if (this.state.appState==1) {

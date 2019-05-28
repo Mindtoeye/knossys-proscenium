@@ -1,4 +1,16 @@
 
+.scrim {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #403f3fd9;
+  z-index: 10000;
+  padding: 0px;
+  margin: 0px;
+}
+
 .genericWindow {
   background-color: #3c3c3c;
   position: absolute;
@@ -24,10 +36,35 @@
 
   display: flex;
   flex-direction: column;
+
   padding: 0px;  
+  padding-bottom: 20px;
+}
+
+.centered {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .desktopWidget {
+  background-color: var(--main-widget-background);
+  position: absolute;
+  border-radius: 5px;
+  border: 1px solid #565656;
+  -webkit-box-shadow: inset 0px 0px 21px 8px rgba(0,0,0,0.16);
+  -moz-box-shadow: inset 0px 0px 21px 8px rgba(0,0,0,0.16);
+  box-shadow: inset 0px 0px 21px 8px rgba(0,0,0,0.16);
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  color: #ffffff; 
+}
+
+.desktopPanel {
   background-color: var(--main-window-content);
   position: absolute;
   border-radius: 5px;
@@ -64,6 +101,12 @@
 }
 
 .desktopWidgetContent {
+  color: var(--main-window-text);
+  margin: 2px;
+  padding: 2px;
+}
+
+.desktopPanelContent {
   color: var(--main-window-text);
   margin: 2px;
   padding: 2px;

@@ -18,10 +18,11 @@
 }
 
 .connectLabel {
- width: 160px;
- display: block;
- margin: auto;
- font-size: 10pt;
+  /* width: 200px; */
+  display: block;
+  margin: auto;
+  font-size: 10pt;
+  text-align: center;
 }
 
 .loaderStyle {
@@ -51,25 +52,28 @@
 
 .smallChaperone {
   background: url("../images/knossys-chaperone.png");
-  opacity: 0.2;
 }
 
 .smallDB {
   background: url("../images/knossys-db.png");
-  opacity: 0.2;  
 }
 
 .smallProscenium {
   background: url("../images/knossys-proscenium.png");
-  opacity: 1;  
 }
 
 .smallMain {
   background: url("../images/knossys-small.png");
-  opacity: 0.2;  
 }
 
 .smallSpark {
   background: url("../images/knossys-spark.png");
-  opacity: 0.2;  
+}
+
+.iconDisabled {
+  opacity: 0.2;
+}
+
+.iconEnabled {
+  opacity: 1;
 }

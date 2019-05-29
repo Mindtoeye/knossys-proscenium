@@ -94,7 +94,7 @@ class MainWindow extends React.Component {
   *
   */
   componentDidMount () {
-    console.log ("componentDidMount");
+    //console.log ("componentDidMount");
     setTimeout (() => {
       this.refs.taskbar.addIcon (iconJob,"Submit Job","1","1");
       this.refs.taskbar.addIcon (iconTaskmanager,"TaskManager","2","1");

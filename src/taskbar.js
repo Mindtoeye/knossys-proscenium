@@ -22,10 +22,9 @@ export default class TaskBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      folded: false,
-      taskbarSize: "medium",
-      barHeight: heightFull,
-      icons: []
+      folded: true,
+      taskbarSize: "small",
+      barHeight: heightFolded
     };
 
     this.onIconClicked = this.onIconClicked.bind(this);
@@ -46,36 +45,12 @@ export default class TaskBar extends React.Component {
   /**
    *
    */
-  addIcon (aFace,aLabel,anId) {
-    //console.log ("addIcon("+aFace+","+aLabel+","+anId+")");
-
-    /* 
-    for (let i=0;i<arguments.length;i++) {
-      console.log ("Arg " + i + ": " + arguments [i]);
-    }
-    */
-
-    let newIcon={
-      type: "icon",
-      face: aFace,
-      label: aLabel,
-      id: anId
-    };
-
-    let newIcons=this.state.icons.concat (newIcon);
-
-    //console.trace (newIcon);
-
-    this.setState ({icons: newIcons});
-  }
-
-  /**
-   *
-   */
+  /* 
   addSeparator () {
     let newIcons=this.state.icons.concat ({type:"separator"}); 
     this.setState ({icons: newIcons});
   }
+  */
   
   /**
    * 
@@ -103,18 +78,20 @@ export default class TaskBar extends React.Component {
     
     let icons=null;
 
-    if (this.state.icons.length>0) {
+    if (this.props.windows.length>0) {
       icons=[];
-      for (let i=0;i<this.state.icons.length;i++) {
-        let icon=this.state.icons [i];
+      for (let i=0;i<this.props.windows.length;i++) {
+        let app=this.props.windows [i];
 
-        if (icon.type=="icon") {
-          icons.push (<TaskBarIcon key={"icon"+i} tsize={this.state.taskbarSize} icon={icon.face} label={icon.label} appId={icon.id} iconClicked={this.onIconClicked}/>);
+        if (app.icon) {
+          icons.push (<TaskBarIcon key={"icon"+i} tsize={this.state.taskbarSize} icon={app.icon} title={app.title} appId={app.id} iconClicked={this.onIconClicked}/>);
         }
 
+        /*
         if (icon.type=="separator") {
           icons.push (<div key={"sep"+i} className="taskbarVr"></div> );
-        }      
+        } 
+        */     
       }
     } else {
       icons="Loading taskbar icons ...";

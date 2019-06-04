@@ -1,6 +1,11 @@
+
 html {
   font-family: Verdana;
   font-size: 10pt;
+}
+
+*:focus {
+  outline: none;
 }
 
 body {

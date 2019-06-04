@@ -25,6 +25,9 @@ import "../styles/wmgr/widgets/radiobutton.css";
 
 import "../styles/clock.scss";
 
+import { getRandomArbitrary, getRandomInt } from './tools/random.js';
+import { uuidv4 } from './tools/uuid.js';
+
 import knossys from '../styles/images/knossys.png';
 import settings from '../styles/images/icons/settings-icon.png';
 import fullscreen from '../styles/images/icons/fullscreen.png';
@@ -57,6 +60,10 @@ import DigitalClock from "./widgets/digitalclock";
 import Clock from './widgets/clock';
 import Dial from './widgets/dial';
 
+//https://whoisandy.github.io/react-rangeslider/
+import Slider from 'react-rangeslider'
+import "../styles/wmgr/widgets/rangeslider.scss";
+
 // https://www.npmjs.com/package/react-google-charts
 import Chart from 'react-google-charts';
 
@@ -83,7 +90,9 @@ class MainWindow extends React.Component {
     super();
 
     this.state={
+      windowTemplates: [],
       popupDialog: null,
+      windowIndex: 0,  
       globalSettings: {
         showGrid: false
       }
@@ -95,7 +104,9 @@ class MainWindow extends React.Component {
   */
   componentDidMount () {
     console.log ("componentDidMount");
+
     setTimeout (() => {
+      /*
       this.refs.taskbar.addIcon (iconJob,"Submit Job","1","1");
       this.refs.taskbar.addIcon (iconTaskmanager,"TaskManager","2","1");
       this.refs.taskbar.addIcon (iconAnalyze,"View Results","3","1");
@@ -107,7 +118,16 @@ class MainWindow extends React.Component {
       this.refs.taskbar.addIcon (iconSpark,"Spark Status","7","1");
       this.refs.taskbar.addIcon (iconLogging,"Inspect Logs","8","1"); 
       this.refs.taskbar.addIcon (iconFinite,"FSM Editor","9","1");  
+      */
+      this.addWindow (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />,iconFinite,"FSM Editor",false);
     },1000);
+  }
+
+  /**
+   *
+   */
+  getWindowIndex () {
+    return (this.state.windowIndex);
   }
 
   /**
@@ -121,6 +141,169 @@ class MainWindow extends React.Component {
         </Dialog>
       </div>);
   }
+
+  /**
+   *
+   */
+  deleteWindow (targetWindow) {
+    console.log ("deleteWindow ("+targetWindow+")");
+
+    this.toggleWindow (targetWindow);
+
+    /*
+    let tempIndex=this.state.windowIndex;
+    let newList=this.state.windowTemplates.filter (aWindow => {
+      if (aWindow.id==targetWindow) {
+        return (false);
+      }
+
+      return (true);
+    });
+
+    tempIndex--;
+
+    this.setState((state, props) => {
+      return {
+        windowTemplates: newList,
+        windowIndex: tempIndex,
+      };
+    });
+    */
+  }  
+
+  /**
+   *
+   */
+  addWindow (aContent,anIcon,aLabel,aShown) {
+    console.log ("addWindow ("+aShown+")");
+
+    let showWindow=true;
+    let generatedId=uuidv4();
+    if(typeof aShown !== 'undefined')  {
+      showWindow=aShown;
+    }
+
+    let windowObject={
+      type: "window",
+      id: generatedId,
+      index: this.state.windowIndex,
+      x: getRandomInt (10,500),
+      y: getRandomInt (10,500),
+      content: aContent,
+      icon: anIcon,
+      title: aLabel,
+      shown: showWindow
+    };
+
+    this.setState(state => {
+      let tempIndex=this.state.windowIndex;
+
+      let list = state.windowTemplates.concat(windowObject);
+
+      tempIndex++;
+
+      return {
+        windowTemplates: list,
+        windowIndex: tempIndex
+      };
+    });    
+  }
+
+  /**
+   *
+   */
+  addDialog (aContent) {
+    console.log ("addDialog ()");
+
+    let generatedId=uuidv4();
+
+    let windowObject={
+      type: "dialog",
+      id: generatedId,      
+      index: this.state.windowIndex,
+      x: getRandomInt (10,500),
+      y: getRandomInt (10,500),
+      content: aContent,
+      shown: true      
+    };
+
+    this.setState(state => {
+      let tempIndex=this.state.windowIndex;
+
+      let list = this.state.windowTemplates.concat(windowObject);
+
+      tempIndex++;
+
+      return {
+        windowTemplates: list,
+        windowIndex: tempIndex
+      };
+    });    
+  }  
+
+  /**
+   *
+   */
+  addModal (aContent) {
+    console.log ("addModal ()");
+
+    let generatedId=uuidv4();
+
+    let windowObject={
+      type: "modal",
+      id: generatedId,      
+      index: this.state.windowIndex,
+      x: getRandomInt (10,500),
+      y: getRandomInt (10,500),
+      content: aContent,
+      shown: true
+    };
+
+    this.setState(state => {
+      let tempIndex=this.state.windowIndex;
+
+      let list = this.state.windowTemplates.concat(windowObject);
+
+      tempIndex++;
+
+      return {
+        windowTemplates: list,
+        windowIndex: tempIndex
+      };
+    });    
+  }   
+
+  /**
+   *
+   */
+  addDesktopWidget (aContent) {
+    console.log ("addDesktopWidget ()");
+
+    let generatedId=uuidv4();
+
+    let windowObject={
+      type: "desktop",
+      id: generatedId,      
+      index: this.state.windowIndex,
+      x: getRandomInt (10,500),
+      y: getRandomInt (10,500),
+      content: aContent,
+      shown: true
+    };
+
+    this.setState(state => {
+      let tempIndex=this.state.windowIndex;
+
+      let list = this.state.windowTemplates.concat(windowObject);
+
+      tempIndex++;
+
+      return {
+        windowTemplates: list,
+        windowIndex: tempIndex
+      };
+    });    
+  }  
 
   /**
    *
@@ -147,25 +330,25 @@ class MainWindow extends React.Component {
   /**
    *
    */
-  addAnonymousDialog () {
-    console.log ("addAnonymousDialog ()");
-    this.refs.desktop.addDialog (<WindowContent label={"Window: [" + this.refs.desktop.getWindowIndex () +"]"} />);
-  }  
+  addAnonymousWindow () {
+    console.log ("addAnonymousWindow ()");
+    this.refs.desktop.addWindow (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />,null,"Anon Window");
+  }
 
   /**
    *
    */
-  addAnonymousWindow () {
-    console.log ("addAnonymousWindow ()");
-    this.refs.desktop.addWindow (<WindowContent label={"Window: [" + this.refs.desktop.getWindowIndex () +"]"} />);
-  }
+  addAnonymousDialog () {
+    console.log ("addAnonymousDialog ()");
+    this.refs.desktop.addDialog (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />);
+  }  
 
   /**
    *
    */
   addModalDialog () {
     console.log ("addModalDialog ()");
-    this.refs.desktop.addModal (<WindowContent label={"Window: [" + this.refs.desktop.getWindowIndex () +"]"} />);
+    this.refs.desktop.addModal (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />);
   }  
 
   /**
@@ -223,8 +406,34 @@ class MainWindow extends React.Component {
   /**
    *
    */
-  onIconClicked (id) {
-    console.log ("onIconClicked ("+id+")");
+  toggleWindow (id) {
+    console.log ("toggleWindow ("+id+")");
+
+    for (let i=0;i<this.state.windowTemplates.length;i++) {
+      let testWindow=this.state.windowTemplates [i];
+
+      if (testWindow.id==id) {
+        let newList=this.state.windowTemplates.filter (aWindow => {
+          if (aWindow.id==testWindow.id) {
+            return (false);
+          }
+
+          return (true);
+        });
+
+        if (testWindow.shown==true) {
+          testWindow.shown=false;
+        } else {
+          testWindow.shown=true;
+        }
+
+        let updatedList=newList.concat (testWindow);
+
+        this.setState ({windowTemplates: updatedList});
+
+        return;
+      }
+    }
   }
 
   /**
@@ -288,10 +497,17 @@ class MainWindow extends React.Component {
         <MenuBar onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
 
 
-        <WindowManager ref="desktop" settings={this.state.globalSettings}>
+        <WindowManager 
+           ref="desktop" 
+           settings={this.state.globalSettings}
+           windows={this.state.windowTemplates}
+           deleteWindow={this.deleteWindow.bind(this)}
+           addWindow={this.addWindow.bind(this)}
+           addDialog={this.addDialog.bind(this)}
+           addModal={this.addModal.bind(this)}>
 
 
-          <DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={250}>
+          <DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={300}>
             <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
             <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
             <button className="defaultButton" onClick={this.addModalDialog.bind(this)}>Add Modal Dialog</button><br/>
@@ -302,6 +518,11 @@ class MainWindow extends React.Component {
             <Switch />
             <ToggleButton /><br />
             <RadioButton /><br />
+            <Slider
+              min={0}
+              max={100}
+              value={50}
+            />
           </DesktopPanel>        
 
 
@@ -373,9 +594,11 @@ class MainWindow extends React.Component {
         </WindowManager>
 
 
-        <TaskBar ref="taskbar" onIconClicked={this.onIconClicked.bind(this)}/>
+        <TaskBar ref="taskbar" onIconClicked={this.toggleWindow.bind(this)} windows={this.state.windowTemplates} />
+
 
         {modalDialog}
+
 
       </div>);
   }

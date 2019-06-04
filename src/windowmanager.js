@@ -23,26 +23,6 @@ import Dialog from "./dialog";
 import DesktopWidget from "./desktopwidget";
 
 /**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-/**
- * Returns a random integer between min (inclusive) and max (inclusive).
- * The value is no lower than min (or the next integer greater than min
- * if min isn't an integer) and no greater than max (or the next integer
- * lower than max if max isn't an integer).
- * Using Math.round() will give you a non-uniform distribution!
- */
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-/**
  *
  */
 class WindowManager extends React.Component {
@@ -54,18 +34,64 @@ class WindowManager extends React.Component {
     super();
 
     this.state = {
-      windowTemplates: [],
-      pop: 0,
-      windowIndex: 0
+      pop: 0
     };
   }
 
   /**
    *
    */
-  getWindowIndex () {
-  	return (this.state.windowIndex);
+  deleteWindow (aWindow) {
+    console.log ("deleteWindow ("+aWindow+")");
+
+    if (this.props.deleteWindow) {
+      this.props.deleteWindow (aWindow);
+    }
+  }  
+
+  /**
+   *
+   */
+  addWindow (aContent,anIcon,aLabel,aShown) {
+    console.log ("addWindow ()");
+
+    if (this.props.addWindow) {
+      this.props.addWindow (aContent,anIcon,aLabel,aShown);
+    }
   }
+
+  /**
+   *
+   */
+  addDialog (aContent) {
+    console.log ("addDialog ()");
+
+    if (this.props.addDialog) {
+      this.props.addDialog (aContent);
+    }
+  }  
+
+  /**
+   *
+   */
+  addModal (aContent) {
+    console.log ("addModal ()");
+
+    if (this.props.addModel) {
+      this.props.addModel (aContent);
+    }
+  }   
+
+  /**
+   *
+   */
+  addDesktopWidget (aContent) {
+    console.log ("addDesktopWidget ()");
+
+    if (this.props.addDesktopWidget) {
+      this.props.addDesktopWidget (aContent);
+    }
+  }    
 
   /**
    *
@@ -73,7 +99,7 @@ class WindowManager extends React.Component {
   popWindow (targetWindow) {
     console.log ("popWindow("+targetWindow+")");
 
-    let indexSpread=this.state.windowTemplates.length;
+    let indexSpread=this.props.windows.length;
 
     let originalList=[];
 
@@ -111,175 +137,28 @@ class WindowManager extends React.Component {
   /**
    *
    */
-  deleteWindow (targetWindow) {
-    console.log ("deleteWindow ("+targetWindow+")");
-
-    let tempIndex=this.state.windowIndex;
-    let newList=this.state.windowTemplates.filter (aWindow => {
-      if (aWindow.index==targetWindow) {
-        return (false);
-      }
-
-      return (true);
-    });
-
-    tempIndex--;
-
-    this.setState((state, props) => {
-      return {
-        windowTemplates: newList,
-        windowIndex: tempIndex,
-      };
-    });      
-  }  
-
-  /**
-   *
-   */
-  addAnonymousWindow () {
-    console.log ("addAnonymousWindow ()");
-    this.addWindow (<WindowContent label={"Window: [" + this.state.windowIndex +"]"} />);
-  }
-
-  /**
-   *
-   */
-  addAnonymousDialog () {
-    console.log ("addAnonymousDialog ()");
-    this.addDialog (<WindowContent label={"Window: [" + this.state.windowIndex +"]"} />);
-  }  
-
-  /**
-   *
-   */
-  addWindow (aContent) {
-    console.log ("addWindow ()");
-
-    let windowObject={
-      type: "window",
-      index: this.state.windowIndex,
-      x: getRandomInt (10,500),
-      y: getRandomInt (10,500),
-      content: aContent
-    };
-
-    this.setState(state => {
-      let tempIndex=this.state.windowIndex;
-
-      let list = state.windowTemplates.concat(windowObject);
-
-      tempIndex++;
-
-      return {
-        windowTemplates: list,
-        windowIndex: tempIndex
-      };
-    });    
-  }
-
-  /**
-   *
-   */
-  addDialog (aContent) {
-    console.log ("addDialog ()");
-
-    let windowObject={
-      type: "dialog",
-      index: this.state.windowIndex,
-      x: getRandomInt (10,500),
-      y: getRandomInt (10,500),
-      content: aContent
-    };
-
-    this.setState(state => {
-      let tempIndex=this.state.windowIndex;
-
-      let list = state.windowTemplates.concat(windowObject);
-
-      tempIndex++;
-
-      return {
-        windowTemplates: list,
-        windowIndex: tempIndex
-      };
-    });    
-  }  
-
-  /**
-   *
-   */
-  addModal (aContent) {
-    console.log ("addModal ()");
-
-    let windowObject={
-      type: "modal",
-      index: this.state.windowIndex,
-      x: getRandomInt (10,500),
-      y: getRandomInt (10,500),
-      content: aContent
-    };
-
-    this.setState(state => {
-      let tempIndex=this.state.windowIndex;
-
-      let list = state.windowTemplates.concat(windowObject);
-
-      tempIndex++;
-
-      return {
-        windowTemplates: list,
-        windowIndex: tempIndex
-      };
-    });    
-  }   
-
-  /**
-   *
-   */
-  addDesktopWidget (aContent) {
-    console.log ("addDesktopWidget ()");
-
-    let windowObject={
-      type: "desktop",
-      index: this.state.windowIndex,
-      x: getRandomInt (10,500),
-      y: getRandomInt (10,500),
-      content: aContent
-    };
-
-    this.setState(state => {
-      let tempIndex=this.state.windowIndex;
-
-      let list = state.windowTemplates.concat(windowObject);
-
-      tempIndex++;
-
-      return {
-        windowTemplates: list,
-        windowIndex: tempIndex
-      };
-    });    
-  }  
-
-  /**
-   *
-   */
   render() {
     let windows=[];
 
-    for (var i=0;i<this.state.windowTemplates.length;i++) {
-      let aTemplate=this.state.windowTemplates [i];
+    for (var i=0;i<this.props.windows.length;i++) {
+      let aTemplate=this.props.windows [i];
 
       if (aTemplate.type=="window") {
-        windows.push (<Window settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.index} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Window>);      
+        //console.log ("Window: " + aTemplate.shown);
+
+        if (aTemplate.content) {
+          if (aTemplate.shown==true) {
+            windows.push (<Window settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Window>);      
+          }  
+        }
       }
 
       if (aTemplate.type=="dialog") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.index} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
+        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
       }
 
       if (aTemplate.type=="modal") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.index} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
+        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
       }      
     }
 
@@ -290,9 +169,9 @@ class WindowManager extends React.Component {
     }
 
     return (<div className={windowClass}>
-        {this.props.children}
-        {windows}
-      </div>);
+      {this.props.children}
+      {windows}
+    </div>);
   }
 }
 

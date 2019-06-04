@@ -50,6 +50,13 @@ export class Window extends React.Component {
     let aWidth=this.props.width;
     let aHeight=this.props.height;
     let anIndex=this.state.index;
+    let title=("Knossys: " + this.props.id);
+
+    console.log ("id: " + this.props.id);
+
+    if (this.props.title) {
+      title=this.props.title;
+    }
 
     let windowContent = "windowContent";
 
@@ -57,7 +64,7 @@ export class Window extends React.Component {
     <div id={this.props.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
       <div className="macribbon" onClick={() => this.props.popWindow(this.props.id)}>
 
-        Knossys:{this.props.id}
+        {title}
 
         <div className="standardCloseButton" onClick={() => this.props.deleteWindow(this.props.id)}>
           <svg width="12" height="12" version="1.1" xmlns="http://www.w3.org/2000/svg">

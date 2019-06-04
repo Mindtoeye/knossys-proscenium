@@ -45,7 +45,7 @@ export default class TaskBarIcon extends React.Component {
             <img src={this.props.icon} className="iconFaceMedium" />
           </div>
           <div className="iconLabel">
-            {this.props.label}
+            {this.props.title}
           </div>
         </div>
     );

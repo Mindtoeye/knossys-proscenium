@@ -70,6 +70,8 @@ import Chart from 'react-google-charts';
 // https://casesandberg.github.io/react-color/
 import { SketchPicker } from 'react-color';
 
+import FSMEditor from './apps/fsmeditor'
+
 // https://github.com/zcreativelabs/react-simple-maps
 import {
   ComposableMap,
@@ -119,7 +121,7 @@ class MainWindow extends React.Component {
       this.refs.taskbar.addIcon (iconLogging,"Inspect Logs","8","1"); 
       this.refs.taskbar.addIcon (iconFinite,"FSM Editor","9","1");  
       */
-      this.addWindow (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />,iconFinite,"FSM Editor",false);
+      this.addWindow (<FSMEditor label={"Window: [" + this.getWindowIndex () +"]"} />,iconFinite,"FSM Editor",false);
     },1000);
   }
 

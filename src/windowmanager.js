@@ -18,6 +18,7 @@ import "../styles/wmgr/windefs.css";
 import "../styles/wmgr/elements.css";
 
 import Window from "./window";
+import WindowApplication from "./windowapp";
 import WindowContent from "./windowcontent";
 import Dialog from "./dialog";
 import DesktopWidget from "./desktopwidget";
@@ -148,7 +149,7 @@ class WindowManager extends React.Component {
 
         if (aTemplate.content) {
           if (aTemplate.shown==true) {
-            windows.push (<Window settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Window>);      
+            windows.push (<WindowApplication settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</WindowApplication>);      
           }  
         }
       }

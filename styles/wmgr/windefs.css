@@ -89,7 +89,19 @@
   flex: 2;
   display: flex; 
   padding: 2px;
-  overflow: auto;
+  overflow: hidden;
+}
+
+.windowAppContent {
+  color: var(--main-window-text);
+  flex: 2;
+  display: flex;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.windowMain {
+  width: 100%;
 }
 
 .dialogContent {
@@ -123,6 +135,8 @@
   -webkit-border-radius: 5px 5px 0px 0px;
   color: #fff;
   font-size: 8pt;
+
+  cursor: grab;
 }
 
 .widgetribbon {
@@ -139,14 +153,29 @@
 
 .statusbar {
   margin: 0px;
+  margin-left: 2px;
+  margin-right: 2px;
   padding: 1px;
   padding-left: 4px;
   padding-right: 4px;
-  border-radius: 5px 5px 0px 0px;
-  -moz-border-radius: 5px 5px 0px 0px;
-  -webkit-border-radius: 5px 5px 0px 0px;
+
+  border: 1px inset #717171;
   color: #c5c5c5;
   font-size: 8pt;
+
+  /* To make space for the gripper */
+  -webkit-border-bottom-right-radius: 25px;
+  -moz-border-radius-bottomright: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.gripper {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 0px;
+  bottom: 0px;
+  background: url("../images/icons/resize.png") no-repeat fixed center; ;
 }
 
 .dialogControls {

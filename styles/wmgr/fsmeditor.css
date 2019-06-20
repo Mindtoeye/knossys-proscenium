@@ -1,0 +1,11 @@
+
+.regexEditor {
+  height: 100px;
+  font-family: "Courier";
+  font-size: 10pt;
+  color: #000000;
+  border: 1px inset #717171;
+  background: #9c9a9a;
+  margin: 2px;
+  padding: 2px;
+}

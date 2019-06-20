@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Draggable, {DraggableCore} from 'react-draggable';
-
 import gripper from '../styles/images/icons/resize.png';
 
 /**
- *
+ * https://codepen.io/kunihiko_sugiura/pen/KgQvKk
+ * https://github.com/mzabriskie/react-draggable
  */
 export class WindowApplication extends React.Component {
 
@@ -65,12 +64,9 @@ export class WindowApplication extends React.Component {
     let windowContent = "windowAppContent";
 
     return (
-    <Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1} enableUserSelectHack={false}>
-      <div id={this.props.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
-        <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.id)}>
-
+      <div ref="frame" id={this.props.id} className="genericWindow unselectable" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+        <div className="macribbon handle titlebar" onClick={() => this.props.popWindow(this.props.id)}>
           {title}
-
           <div className="standardCloseButton" onClick={() => this.props.deleteWindow(this.props.id)}>
             <svg width="12" height="12" version="1.1" xmlns="http://www.w3.org/2000/svg">
               <line x1="1" y1="11" 
@@ -104,8 +100,7 @@ export class WindowApplication extends React.Component {
         <div className="gripper">
           <img src={gripper} />
         </div>
-      </div>
-    </Draggable>    
+      </div>  
     );
   }
 }

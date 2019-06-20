@@ -1,3 +1,9 @@
+.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 .scrim {
   position: fixed;
@@ -135,7 +141,9 @@
   -webkit-border-radius: 5px 5px 0px 0px;
   color: #fff;
   font-size: 8pt;
+}
 
+.titlebar {
   cursor: grab;
 }
 
@@ -167,6 +175,11 @@
   -webkit-border-bottom-right-radius: 25px;
   -moz-border-radius-bottomright: 25px;
   border-bottom-right-radius: 25px;
+}
+
+.resizable {
+  resize: both;
+  overflow:auto;
 }
 
 .gripper {

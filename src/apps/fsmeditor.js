@@ -3,18 +3,35 @@ import ReactDOM from "react-dom";
 
 import CytoscapeComponent from "react-cytoscapejs";
 
+import "../../styles/wmgr/fsmeditor.css";
+
 import WindowContent from "../windowcontent";
 
 /**
  * https://github.com/plotly/react-cytoscapejs
+ * https://codepen.io/lopis/pen/XYgRKz
  */
 export class FSMEditor extends WindowContent {
 
   /**
-  *
+  * 
   */
   constructor(props){
     super(props);       
+  }
+
+  /**
+   *
+   */
+  addNode () {
+    console.log ("addNode ()");
+  }
+
+  /**
+   *
+   */
+  deleteNode () {
+    console.log ("deleteNode ()");    
   }
 
   /**
@@ -31,8 +48,7 @@ export class FSMEditor extends WindowContent {
     ];
 
     // http://js.cytoscape.org/#style/
-    const style = [
-    {
+    const style = [{
       selector: 'node',
       style: {
         'content': 'data(id)',
@@ -51,14 +67,18 @@ export class FSMEditor extends WindowContent {
         'target-arrow-shape': 'triangle',
         'target-arrow-color': '#dada76'
       }
-    }
-  ];
+    }];
 
     return <div className="windowMain">
-      <div className="menubar"></div>
+      <div className="menubar" style={{marginLeft: '2px', marginRight: 'px'}}>
+        <button className="defaultButton" onClick={this.addNode.bind(this)}>+</button><br/>
+        <button className="defaultButton" onClick={this.deleteNode.bind(this)}>-</button><br/>
+      </div>
+      <div contentEditable="true" className="regexEditor">
+      </div>
       <div className="windowContent">
         <CytoscapeComponent cy={cy => this.cy = cy} elements={elements} style={{ width: "400px", height: "400px"}} stylesheet={style} />
-      </div>  
+      </div>
     </div>;
   }
 }

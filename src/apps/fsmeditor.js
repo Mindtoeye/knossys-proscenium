@@ -3,9 +3,15 @@ import ReactDOM from "react-dom";
 
 import CytoscapeComponent from "react-cytoscapejs";
 
+import "../../styles/wmgr/toolbar.css";
 import "../../styles/wmgr/fsmeditor.css";
 
+import redoIcon from '../../styles/images/icons/gtk-redo-ltr.png';
+import undoIcon from '../../styles/images/icons/gtk-undo-ltr.png';
+import okIcon from '../../styles/images/icons/ok.png';
+
 import WindowContent from "../windowcontent";
+import ContentEditable from "../widgets/editable";
 
 /**
  * https://github.com/plotly/react-cytoscapejs
@@ -17,7 +23,11 @@ export class FSMEditor extends WindowContent {
   * 
   */
   constructor(props){
-    super(props);       
+    super(props);
+
+    this.state= {
+      html: ""
+    };
   }
 
   /**
@@ -25,6 +35,8 @@ export class FSMEditor extends WindowContent {
    */
   addNode () {
     console.log ("addNode ()");
+
+    this.cy.add({ data: { id: "three", label: "Node 3" }, position: { x: 50, y: 50 }, classes: 'bottom-center' });
   }
 
   /**
@@ -32,6 +44,37 @@ export class FSMEditor extends WindowContent {
    */
   deleteNode () {
     console.log ("deleteNode ()");    
+  }
+
+  /**
+   * http://js.cytoscape.org/#cy.data
+   * https://github.com/plotly/react-cytoscapejs
+   */
+  process () {
+    console.log ("process ()");    
+
+    console.log ("Applying: " + JSON.stringify (this.cy.data()) + " to: " + this.state.html);
+  }
+
+  /**
+   *
+   */
+   editDo () {
+    console.log ("editDo ()");      
+   }
+
+  /**
+   *
+   */
+   editUndo () {
+    console.log ("editUndo ()");      
+   }   
+
+  /**
+   *
+   */
+  handleChange (event) {    
+    this.setState({html: event.target.value});
   }
 
   /**
@@ -73,11 +116,15 @@ export class FSMEditor extends WindowContent {
       <div className="menubar" style={{marginLeft: '2px', marginRight: 'px'}}>
         <button className="defaultButton" onClick={this.addNode.bind(this)}>+</button><br/>
         <button className="defaultButton" onClick={this.deleteNode.bind(this)}>-</button><br/>
+        <div className="verticalSeparator" /> 
+        <button className="toolButton" onClick={this.editDo.bind(this)}><img src={redoIcon} /></button><br/>
+        <button className="toolButton" onClick={this.editUndo.bind(this)}><img src={undoIcon} /></button><br/>
+        <div className="verticalSeparator" />         
+        <button className="toolButton" onClick={this.process.bind(this)}><img src={okIcon} /></button><br/>        
       </div>
-      <div contentEditable="true" className="regexEditor">
-      </div>
+      <ContentEditable html={this.state.html} onChange={this.handleChange.bind(this)} />
       <div className="windowContent">
-        <CytoscapeComponent cy={cy => this.cy = cy} elements={elements} style={{ width: "400px", height: "400px"}} stylesheet={style} />
+        <CytoscapeComponent href="graph" cy={cy => this.cy = cy} elements={elements} style={{ width: "400px", height: "400px"}} stylesheet={style} />
       </div>
     </div>;
   }

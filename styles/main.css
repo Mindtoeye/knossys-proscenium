@@ -34,7 +34,7 @@ body {
 }
 
 .gridDots {
-  background-image: radial-gradient(hsl(0, 0%, 0%) 5%, transparent 0);
+  background-image: radial-gradient(rgb(66, 66, 66) 5%, transparent 0);
   background-size: 30px 30px;
 }
 

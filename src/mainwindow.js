@@ -28,9 +28,9 @@ import "../styles/clock.scss";
 import { getRandomArbitrary, getRandomInt } from './tools/random.js';
 import { uuidv4 } from './tools/uuid.js';
 
-import knossys from '../styles/images/knossys.png';
-import settings from '../styles/images/icons/settings-icon.png';
-import fullscreen from '../styles/images/icons/fullscreen.png';
+//import knossys from '../styles/images/knossys.png';
+//import settings from '../styles/images/icons/settings-icon.png';
+//import fullscreen from '../styles/images/icons/fullscreen.png';
 
 import iconTaskmanager from '../styles/images/taskmanager.png';
 import iconCassandra from '../styles/images/cassandra.png';

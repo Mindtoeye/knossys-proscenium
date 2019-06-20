@@ -206,6 +206,7 @@
   padding: 0px;
   margin: 2px;
   height: 12px;  
+  cursor: pointer;
 }
 
 .standardMaximizeButton {
@@ -213,6 +214,7 @@
   padding: 0px;
   margin: 2px;
   height: 12px;  
+  cursor: pointer;
 }
 
 .standardCloseButton > svg:hover line {

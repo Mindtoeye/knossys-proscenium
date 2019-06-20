@@ -6,6 +6,8 @@ import CytoscapeComponent from "react-cytoscapejs";
 import "../../styles/wmgr/toolbar.css";
 import "../../styles/wmgr/fsmeditor.css";
 
+import addIcon from '../../styles/images/icons/gtk-add.png';
+import deleteIcon from '../../styles/images/icons/delete.png';
 import redoIcon from '../../styles/images/icons/gtk-redo-ltr.png';
 import undoIcon from '../../styles/images/icons/gtk-undo-ltr.png';
 import okIcon from '../../styles/images/icons/ok.png';
@@ -53,7 +55,7 @@ export class FSMEditor extends WindowContent {
   process () {
     console.log ("process ()");    
 
-    console.log ("Applying: " + JSON.stringify (this.cy.data()) + " to: " + this.state.html);
+    console.log ("Applying: " + JSON.stringify (this.cy.json()) + " to: " + this.state.html);
   }
 
   /**
@@ -114,8 +116,8 @@ export class FSMEditor extends WindowContent {
 
     return <div className="windowMain">
       <div className="menubar" style={{marginLeft: '2px', marginRight: 'px'}}>
-        <button className="defaultButton" onClick={this.addNode.bind(this)}>+</button><br/>
-        <button className="defaultButton" onClick={this.deleteNode.bind(this)}>-</button><br/>
+        <button className="toolButton" onClick={this.addNode.bind(this)}><img src={addIcon} /></button><br/>
+        <button className="toolButton" onClick={this.deleteNode.bind(this)}><img src={deleteIcon} /></button><br/>
         <div className="verticalSeparator" /> 
         <button className="toolButton" onClick={this.editDo.bind(this)}><img src={redoIcon} /></button><br/>
         <button className="toolButton" onClick={this.editUndo.bind(this)}><img src={undoIcon} /></button><br/>

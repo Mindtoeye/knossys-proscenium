@@ -103,6 +103,8 @@
   flex: 2;
   display: flex;
   margin-bottom: 4px;
+  margin-left: 2px;
+  margin-right: 2px;  
   overflow: hidden;
 }
 

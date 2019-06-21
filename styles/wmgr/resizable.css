@@ -5,11 +5,11 @@
 }
 
 .panel {
-  /*background: white;*/
+  background: #4e4e4e;;
   border: 1px inset #717171;
   color: #c5c5c5;
   font-size: 8pt;
-  padding: 15px;
+  padding: 2px;
 }
 .panel:first-child {
 

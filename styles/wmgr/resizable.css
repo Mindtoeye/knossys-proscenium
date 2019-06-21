@@ -2,6 +2,8 @@
 .panel-container {
   display: flex;
   min-height: 100px;
+  width: 100%;
+  height: 100%;
 }
 
 .panel {
@@ -10,6 +12,7 @@
   color: #c5c5c5;
   font-size: 8pt;
   padding: 2px;
+  overflow: hidden;
 }
 .panel:first-child {
 
@@ -17,7 +20,7 @@
 
 .resizer {
   width: 8px;
-  background: darkGray;
+  background: #808080;
   position: relative;
   cursor: col-resize;
   flex-shrink: 0;

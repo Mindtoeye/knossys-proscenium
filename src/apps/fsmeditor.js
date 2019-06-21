@@ -5,6 +5,7 @@ import CytoscapeComponent from "react-cytoscapejs";
 
 import "../../styles/wmgr/toolbar.css";
 import "../../styles/wmgr/fsmeditor.css";
+import "../../styles/wmgr/list.css";
 
 import addIcon from '../../styles/images/icons/gtk-add.png';
 import deleteIcon from '../../styles/images/icons/delete.png';
@@ -14,6 +15,7 @@ import okIcon from '../../styles/images/icons/ok.png';
 
 import WindowContent from "../windowcontent";
 import ContentEditable from "../widgets/editable";
+import ResizablePanels from "../widgets/resizable";
 
 /**
  * https://github.com/plotly/react-cytoscapejs
@@ -121,10 +123,24 @@ export class FSMEditor extends WindowContent {
         <div className="verticalSeparator" />         
         <button className="toolButton" onClick={this.process.bind(this)}><img src={okIcon} /></button><br/>        
       </div>
-      <ContentEditable html={this.state.html} onChange={this.handleChange.bind(this)} />
-      <div className="windowContent">
-        <CytoscapeComponent href="graph" cy={cy => this.cy = cy} elements={elements} style={{ width: "400px", height: "400px"}} stylesheet={style} />
-      </div>
+
+      <ResizablePanels>
+        <div>
+          <ul>
+            <li><a href="#">Zurich</a></li>
+            <li><a href="#">Geneva</a></li>
+            <li><a href="#">Winterthur</a></li>
+            <li><a href="#">Lausanne</a></li>
+            <li><a href="#">Lucerne</a></li>                                         
+          </ul>
+        </div>
+        <div>
+        <ContentEditable html={this.state.html} onChange={this.handleChange.bind(this)} style={{height: '100%'}} />
+        <div className="windowContent">
+          <CytoscapeComponent href="graph" cy={cy => this.cy = cy} elements={elements} style={{ width: "400px", height: "400px"}} stylesheet={style} />
+        </div>
+        </div>
+      </ResizablePanels>
     </div>;
   }
 }

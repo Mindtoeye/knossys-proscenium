@@ -26,10 +26,10 @@ export class WindowContent extends React.Component {
         This is the first panel. It will use the rest of the available space.
       </div>
       <div>
-        This is the second panel. Starts with 50px.
+        This is the second panel.
       </div>
       <div>
-        This is the third panel. Starts with 50px.
+        This is the third panel.
       </div>
     </ResizablePanels>);
   }

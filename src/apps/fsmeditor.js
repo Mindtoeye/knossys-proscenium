@@ -17,7 +17,6 @@ import ContentEditable from "../widgets/editable";
 
 /**
  * https://github.com/plotly/react-cytoscapejs
- * https://codepen.io/lopis/pen/XYgRKz
  */
 export class FSMEditor extends WindowContent {
 
@@ -53,24 +52,23 @@ export class FSMEditor extends WindowContent {
    * https://github.com/plotly/react-cytoscapejs
    */
   process () {
-    console.log ("process ()");    
-
+    console.log ("process ()");
     console.log ("Applying: " + JSON.stringify (this.cy.json()) + " to: " + this.state.html);
   }
 
   /**
    *
    */
-   editDo () {
+  editDo () {
     console.log ("editDo ()");      
-   }
+  }
 
   /**
    *
    */
-   editUndo () {
+  editUndo () {
     console.log ("editUndo ()");      
-   }   
+  }   
 
   /**
    *
@@ -83,7 +81,6 @@ export class FSMEditor extends WindowContent {
    *
    */  
   render() {
-
     // view-source:http://js.cytoscape.org/demos/labels/code.js
     const elements = [
        { data: { id: "one", label: "Node 1" }, position: { x: 50, y: 50 }, classes: 'bottom-center' },

@@ -43,11 +43,10 @@ export class DigitalClock extends React.Component {
       }
     }
 
-    return (<DesktopWidget title={this.props.title} label={this.props.label} xPos={this.props.xPos} yPos={this.props.yPos}>
+    return (
       <div className="stackVertical">
         {zones}
-      </div>
-    </DesktopWidget>);
+      </div>);
   }
 }
 

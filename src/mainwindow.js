@@ -28,10 +28,6 @@ import "../styles/clock.scss";
 import { getRandomArbitrary, getRandomInt } from './tools/random.js';
 import { uuidv4 } from './tools/uuid.js';
 
-//import knossys from '../styles/images/knossys.png';
-//import settings from '../styles/images/icons/settings-icon.png';
-//import fullscreen from '../styles/images/icons/fullscreen.png';
-
 import iconTaskmanager from '../styles/images/taskmanager.png';
 import iconCassandra from '../styles/images/cassandra.png';
 import iconSpark from '../styles/images/spark.png';
@@ -40,7 +36,6 @@ import iconAnalyze from '../styles/images/analyze.png';
 import iconCloudUpload from '../styles/images/cloudupload.png';
 import iconLogging from '../styles/images/logging.png';
 import iconWorkflow from '../styles/images/workflow.png';
-import iconFinite from '../styles/images/finite.png';
 
 import Version from "./version";
 import Window from "./window";
@@ -56,21 +51,10 @@ import MenuBar from "./menubar";
 import TaskBar from "./taskbar";
 
 import Label from "./widgets/label";
-import DigitalClock from "./widgets/digitalclock";
-import Clock from './widgets/clock';
-import Dial from './widgets/dial';
 
 //https://whoisandy.github.io/react-rangeslider/
 import Slider from 'react-rangeslider'
 import "../styles/wmgr/widgets/rangeslider.scss";
-
-// https://www.npmjs.com/package/react-google-charts
-import Chart from 'react-google-charts';
-
-// https://casesandberg.github.io/react-color/
-import { SketchPicker } from 'react-color';
-
-import FSMEditor from './apps/fsmeditor'
 
 // https://github.com/zcreativelabs/react-simple-maps
 import {
@@ -108,21 +92,15 @@ class MainWindow extends React.Component {
     console.log ("componentDidMount");
 
     setTimeout (() => {
-      /*
-      this.refs.taskbar.addIcon (iconJob,"Submit Job","1","1");
-      this.refs.taskbar.addIcon (iconTaskmanager,"TaskManager","2","1");
-      this.refs.taskbar.addIcon (iconAnalyze,"View Results","3","1");
-      this.refs.taskbar.addSeparator ();
-      this.refs.taskbar.addIcon (iconWorkflow,"Pipeline","4","1");
-      this.refs.taskbar.addIcon (iconCloudUpload,"Data Upload","5","1");
-      this.refs.taskbar.addSeparator ();
-      this.refs.taskbar.addIcon (iconCassandra,"Data Store","6","1");
-      this.refs.taskbar.addIcon (iconSpark,"Spark Status","7","1");
-      this.refs.taskbar.addIcon (iconLogging,"Inspect Logs","8","1"); 
-      this.refs.taskbar.addIcon (iconFinite,"FSM Editor","9","1");  
-      */
-      this.addWindow (<FSMEditor label={"Window: [" + this.getWindowIndex () +"]"} />,iconFinite,"FSM Editor",false);
-    },1000);
+      if (this.props.apps) {
+        for (var i=0;i<this.props.apps.length;i++) {
+          var anApp=this.props.apps [i];
+          if (anApp.type=="window") {
+            this.addWindow (anApp.window,anApp.icon,anApp.name,anApp.shown);
+          }
+        }
+      }
+    },500);
   }
 
   /**
@@ -442,62 +420,31 @@ class MainWindow extends React.Component {
    *
    */
   render() {
-    const options = {
-      title: "Age vs. Weight comparison",
-      titleTextStyle: {
-        color: '#cccccc'
-      },
-      hAxis: { title: "Age", viewWindow: { min: 0, max: 15 } },
-      vAxis: { title: "Weight", viewWindow: { min: 0, max: 15 } },
-      legend: "none",
-      hAxis: {
-        titleTextStyle: {color: '#607d8b'}, 
-        textStyle: { 
-          color: '#b0bec5', 
-          fontSize: '8', 
-          bold: true}
-      },
-      vAxis: {
-        titleTextStyle: {color: '#607d8b'}, 
-        textStyle: { 
-          color: '#b0bec5', 
-          fontSize: '8', 
-          bold: true}
-      },      
-      backgroundColor: 'transparent',
-      chartArea: {
-        width: '80%', 
-        height: '80%',
-        'backgroundColor': {
-          'fill': '#444444',
-          'opacity': 100
-        }
-      },
-      series: {
-        0: { color: '#dada76' }
-      }
-
-    };
-
-    const data = [
-      ["Age", "Weight"],
-      [8, 12],
-      [4, 5.5],
-      [11, 14],
-      [4, 5],
-      [3, 3.5],
-      [6.5, 7]
-    ];
-
     let modalDialog=this.state.popupDialog;
     let taskbar=this.state.taskbar;
+
+    var desktopPanels=[];
+
+    for (var i=0;i<this.props.apps.length;i++) {
+      var appTester=this.props.apps [i];
+      if (appTester.type=="panel") {
+        desktopPanels.push (<DesktopPanel key={"desktoppanel-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopPanel>);
+      }
+    }
+
+    var desktopWidgets=[];
+
+    for (var i=0;i<this.props.apps.length;i++) {
+      var appTester=this.props.apps [i];
+      if (appTester.type=="widget") {
+        desktopWidgets.push (<DesktopWidget key={"desktopwidget-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopWidget>);
+      }
+    }    
  
     return (
       <div id="desktop" className="desktopContainer">
-
         
         <MenuBar onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
-
 
         <WindowManager 
            ref="desktop" 
@@ -507,7 +454,6 @@ class MainWindow extends React.Component {
            addWindow={this.addWindow.bind(this)}
            addDialog={this.addDialog.bind(this)}
            addModal={this.addModal.bind(this)}>
-
 
           <DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={300}>
             <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
@@ -527,80 +473,15 @@ class MainWindow extends React.Component {
             />
           </DesktopPanel>        
 
+          {desktopWidgets}
 
-
-          <DesktopWidget title="Analog Clock" label="Local Time" xPos={300} yPos={50}>
-            <Clock />
-          </DesktopWidget>
-        
-
-
-          <DigitalClock title="Digital Clock" xPos={450} yPos={50} zones="Los Angeles:US/Pacific,New York:US/Eastern,Tokyo:Asia/Tokyo,Amsterdam:Europe/Amsterdam" />
-
-
-
-          <Dial title="Dial" label="Net Speed" xPos={50} yPos={420} />
-
-
-
-          <DesktopPanel title="Chart (Line)" xPos={300} yPos={400}>
-            <Chart
-             width={300}
-             height={300}
-             chartType="LineChart"
-             loader={<div>Loading Chart</div>}
-             data={[
-               [
-                 { type: 'number', label: 'x' },
-                 { type: 'number', label: 'values' },
-                 { id: 'i0', type: 'number', role: 'interval' },
-                 { id: 'i1', type: 'number', role: 'interval' },
-                 { id: 'i2', type: 'number', role: 'interval' },
-                 { id: 'i2', type: 'number', role: 'interval' },
-                 { id: 'i2', type: 'number', role: 'interval' },
-                 { id: 'i2', type: 'number', role: 'interval' },
-               ],
-               [1, 100, 90, 110, 85, 96, 104, 120],
-               [2, 120, 95, 130, 90, 113, 124, 140],
-               [3, 130, 105, 140, 100, 117, 133, 139],
-               [4, 90, 85, 95, 85, 88, 92, 95],
-               [5, 70, 74, 63, 67, 69, 70, 72],
-               [6, 30, 39, 22, 21, 28, 34, 40],
-               [7, 80, 77, 83, 70, 77, 85, 90],
-               [8, 100, 90, 110, 85, 95, 102, 110],
-             ]}
-             options={options}
-            />
-          </DesktopPanel>
-
-
-
-          <DesktopPanel title="Chart (error)" xPos={700} yPos={400}>
-            <Chart
-              width={300}
-              height={300}
-              chartType="ScatterChart"
-              data={data}
-              options={options}
-              legendToggle
-            />
-          </DesktopPanel>
-
-
-
-          <DesktopPanel title="Color Chooser" xPos={50} yPos={50}>
-            <SketchPicker />
-          </DesktopPanel>
-
+          {desktopPanels}
         
         </WindowManager>
 
-
         <TaskBar ref="taskbar" onIconClicked={this.toggleWindow.bind(this)} windows={this.state.windowTemplates} />
 
-
         {modalDialog}
-
 
       </div>);
   }

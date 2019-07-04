@@ -24,7 +24,7 @@ var tId=-1;
  *  1: connected but not logged in
  *  2: connected and logged in
  */
-class WindowedApp extends React.Component {
+class Desktop extends React.Component {
   
   /**
    *
@@ -123,8 +123,8 @@ class WindowedApp extends React.Component {
       return (<LoginDialog onLogin={this.onLogin.bind(this)} />);
     }    
 
-    return (<MainWindow onLogout={this.onLogout.bind(this)} />);
+    return (<MainWindow apps={this.props.apps} onLogout={this.onLogout.bind(this)} />);
   }
 }
 
-export default WindowedApp;
+export default Desktop;

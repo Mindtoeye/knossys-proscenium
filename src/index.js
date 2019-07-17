@@ -140,4 +140,8 @@ const apps=[{
  y: 400
 }];
 
-ReactDOM.render(<Desktop apps={apps} />, document.getElementById("app"));
+const config = {
+	
+};
+
+ReactDOM.render(<Desktop apps={apps} config={config} />, document.getElementById("app"));

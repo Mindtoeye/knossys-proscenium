@@ -33,9 +33,7 @@ export class Dial extends React.Component {
    *
    */
   render () { 
-    return (<DesktopWidget title={this.props.title} label={this.props.label} xPos={this.props.xPos} yPos={this.props.yPos}>
-      <Gauge value={this.state.value} width={140} height={120} min={0} max={180} label="" />
-    </DesktopWidget>);
+    return (<Gauge value={this.state.value} width={140} height={120} min={0} max={180} label="" />);
   }
 }
 

@@ -13,19 +13,7 @@ body {
 }
 
 .desktop {
-  /*
-  position:fixed;
-  padding:0;
-  margin:0;
- 
-  top:0;
-  left:0;
-
-  width: 100%;
-  height: 100%;
-  */
   background: rgba(255,255,255,0.5);
-
   background: #45484d; /* Old browsers */
   background: -moz-linear-gradient(-45deg, var(--main-bg-color) 0%, #000000 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(-45deg, var(--main-bg-color) 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */

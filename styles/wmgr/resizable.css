@@ -45,3 +45,7 @@
 .resizer::before {
   left: 0;
 }
+
+.resizegripper {
+  cursor: nwse-resize;
+}

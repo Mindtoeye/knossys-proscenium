@@ -24,7 +24,6 @@ export class WindowApplication extends React.Component {
     this.state = {
       id: props.id,
       count: 0,
-      index: props.zIndex,
       currentResizerId: this.dataTools.uuidv4(),
       minimum_size: 20,
       original_width: 0,
@@ -59,7 +58,7 @@ export class WindowApplication extends React.Component {
    *
    */
   resizeStart (e) {
-    console.log ("resizeStart ()");
+    console.log ("resizeStart ("+this.props.id+")");
 
     e.preventDefault();
 
@@ -117,7 +116,7 @@ export class WindowApplication extends React.Component {
    *
    */
   reIndex (newIndex) {
-    console.log ("reIndex ("+newIndex+")");
+    //console.log ("reIndex ("+newIndex+")");
     this.setState ({index: newIndex});
   }
 
@@ -142,11 +141,10 @@ export class WindowApplication extends React.Component {
     let xPos=this.props.xPos;
     let yPos=this.props.yPos;
     let aWidth=this.props.width;
-    let aHeight=this.props.height;
-    let anIndex=this.state.index;
+    let aHeight=this.props.height;    
     let title=("Knossys: " + this.props.id);
 
-    console.log ("id: " + this.props.id);
+    //console.log ("id: " + this.props.id);
 
     if (this.props.title) {
       title=this.props.title;
@@ -156,7 +154,7 @@ export class WindowApplication extends React.Component {
 
     return (
       <Draggable handle=".titlebar" defaultPosition={{x: 0, y: 0}} scale={1}>
-        <div ref="frame" id={this.props.id} className="genericWindow unselectable" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+        <div className="genericWindow unselectable" style={{left: xPos, top: yPos, width: aWidth, height: aHeight}} onClick={() => this.props.popWindow(this.props.id)} id={this.props.id}>
           <div className="macribbon handle titlebar" onClick={() => this.props.popWindow(this.props.id)}>
             {title}
             <div className="standardCloseButton" onClick={() => this.props.deleteWindow(this.props.id)}>

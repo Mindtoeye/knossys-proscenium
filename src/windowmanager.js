@@ -17,6 +17,8 @@ import "../styles/wmgr/buttonlarge.css";
 import "../styles/wmgr/windefs.css";
 import "../styles/wmgr/elements.css";
 
+import DataTools from './tools/datatools';
+
 import Window from "./window";
 import WindowApplication from "./windowapp";
 import WindowContent from "./windowcontent";
@@ -33,6 +35,8 @@ class WindowManager extends React.Component {
    */
   constructor () {
     super();
+
+    this.dataTools=new DataTools ();
 
     this.state = {
       pop: 0
@@ -98,41 +102,21 @@ class WindowManager extends React.Component {
    *
    */
   popWindow (targetWindow) {
-    console.log ("popWindow("+targetWindow+")");
+    //console.log ("popWindow("+targetWindow+")");
 
-    let indexSpread=this.props.windows.length;
+    let updatedWindows=this.dataTools.deepCopy (this.props.windows);
 
-    let originalList=[];
-
-    for (let i=0;i<indexSpread;i++) {
-      let oldIndex=this.refs ["win"+i].getIndex ();
-      originalList.push ({
-        index: i,
-        zIndex: oldIndex
-      });
-    }
-
-    let reworkedList=[];
-    let target=null;
-
-    for (let j=0;j<originalList.length;j++) {
-      let reference=originalList [j];
-
-      if (reference.index!=targetWindow) {
-        reworkedList.push(reference);
-      } else {
-        target=reference;
+    for (let i=0;i<updatedWindows.length;i++) {
+      let win=updatedWindows [i];
+      if (win.id==targetWindow) {
+        let updated=this.dataTools.deleteElement (updatedWindows,win);
+        updated.push (win);
+        if (this.props.updateWindows) {
+          this.props.updateWindows (updated);
+          return;
+        }
       }
     }
-
-    reworkedList.push (target);
-    let zIndex=0;
- 
-    for (let k=0;k<reworkedList.length;k++) {
-      let test=reworkedList [k];
-      this.refs ["win"+test.index].reIndex (zIndex);
-      zIndex+=1000;
-    }    
   }
 
   /**
@@ -140,28 +124,36 @@ class WindowManager extends React.Component {
    */
   render() {
     let windows=[];
+    let zIndex=1;
 
     for (var i=0;i<this.props.windows.length;i++) {
       let aTemplate=this.props.windows [i];
 
       if (aTemplate.type=="window") {
-        //console.log ("Window: " + aTemplate.shown);
-
         if (aTemplate.content) {
           if (aTemplate.shown==true) {
-            windows.push (<WindowApplication settings={this.props.settings} ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</WindowApplication>);      
-          }  
+            let reference="win"+aTemplate.index;      
+            windows.push (<WindowApplication settings={this.props.settings} ref={reference} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</WindowApplication>);      
+
+            zIndex++;
+          }            
         }
-      }
+      }  
+    }
+
+    for (var j=0;j<this.props.windows.length;j++) {
+      let aTemplate=this.props.windows [j];
 
       if (aTemplate.type=="dialog") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
+        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={zIndex*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
       }
 
       if (aTemplate.type=="modal") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={i*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
-      }      
-    }
+        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={zIndex*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
+      }     
+      
+      zIndex++; 
+    }    
 
     let windowClass="desktopContent";
 

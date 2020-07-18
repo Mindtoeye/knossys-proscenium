@@ -129,26 +129,6 @@ class MainWindow extends React.Component {
     console.log ("deleteWindow ("+targetWindow+")");
 
     this.toggleWindow (targetWindow);
-
-    /*
-    let tempIndex=this.state.windowIndex;
-    let newList=this.state.windowTemplates.filter (aWindow => {
-      if (aWindow.id==targetWindow) {
-        return (false);
-      }
-
-      return (true);
-    });
-
-    tempIndex--;
-
-    this.setState((state, props) => {
-      return {
-        windowTemplates: newList,
-        windowIndex: tempIndex,
-      };
-    });
-    */
   }  
 
   /**
@@ -419,6 +399,13 @@ class MainWindow extends React.Component {
   /**
    *
    */
+  updateWindows (newWindowData) {
+    this.setState ({windowTemplates: newWindowData});    
+  }
+
+  /**
+   *
+   */
   render() {
     let modalDialog=this.state.popupDialog;
     let taskbar=this.state.taskbar;
@@ -450,6 +437,7 @@ class MainWindow extends React.Component {
            ref="desktop" 
            settings={this.state.globalSettings}
            windows={this.state.windowTemplates}
+           updateWindows={this.updateWindows.bind(this)}
            deleteWindow={this.deleteWindow.bind(this)}
            addWindow={this.addWindow.bind(this)}
            addDialog={this.addDialog.bind(this)}

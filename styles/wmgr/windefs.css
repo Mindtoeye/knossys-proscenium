@@ -28,7 +28,7 @@
 
   display: flex;
   flex-direction: column;
-  padding: 2px;  
+  padding: 1px;  
 }
 
 .dialogWindow {
@@ -133,7 +133,9 @@
 }
 
 .macribbon {
-  margin: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin: 1px;
   padding: 1px;
   padding-left: 4px;
   padding-right: 4px;
@@ -141,12 +143,48 @@
   border-radius: 5px 5px 0px 0px;
   -moz-border-radius: 5px 5px 0px 0px;
   -webkit-border-radius: 5px 5px 0px 0px;
-  color: #fff;
+  
+  color: #989898;
+  
   font-size: 8pt;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.macribbonselected {
+  margin-left: 2px;
+  margin-right: 2px;
+  margin: 1px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: var(--main-window-title);
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  color: white;
+  
+  font-size: 8pt;
+
+  display: flex;
+  flex-direction: row;  
 }
 
 .titlebar {
   cursor: grab;
+}
+
+.titlecontent {
+  height: 20px;
+  
+  font-size: 8pt;
+  text-align: left;
+  /*line-height: 17px;*/
+    
+  flex: 1;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .widgetribbon {
@@ -165,7 +203,7 @@
   margin: 0px;
   margin-left: 2px;
   margin-right: 2px;
-  padding: 1px;
+  padding: 0px;
   padding-left: 4px;
   padding-right: 4px;
 
@@ -204,7 +242,7 @@
 }
 
 .standardCloseButton {
-  float: right;
+  flex: 0;
   padding: 0px;
   margin: 2px;
   height: 12px;  
@@ -212,21 +250,19 @@
 }
 
 .standardMaximizeButton {
-  float: right;
+  flex: 0;
   padding: 0px;
   margin: 2px;
   height: 12px;  
   cursor: pointer;
 }
 
-.standardCloseButton > svg:hover line {
-  float: right;
+.standardCloseButton > svg:hover line {  
   stroke: var(--main-highlight);
   fill: var(--main-highlight);
 }
 
 .standardMaximizeButton > svg:hover line {
-  float: right;  
   stroke: var(--main-highlight);
   fill: var(--main-highlight);
 }

@@ -101,10 +101,39 @@ class WindowManager extends React.Component {
   /**
    *
    */
+  maximizeWindow (targetWindow) {
+    //console.log ("maximizeWindow("+targetWindow+")");
+
+    let updatedWindows=this.dataTools.deepCopy (this.props.windows);
+
+    for (let j=0;j<updatedWindows.length;j++) {
+      updatedWindows [j].maximized=false;
+    }
+
+    for (let i=0;i<updatedWindows.length;i++) {
+      if (updatedWindows [i].id==targetWindow) {
+        updatedWindows [i].maximized=true;
+        if (this.props.updateWindows) {
+          //console.log (updatedWindows);
+          this.props.updateWindows (updatedWindows);
+          return;
+        }
+      }
+    }    
+  }
+
+  /**
+   *
+   */
   popWindow (targetWindow) {
     //console.log ("popWindow("+targetWindow+")");
 
     let updatedWindows=this.dataTools.deepCopy (this.props.windows);
+
+    for (let j=0;j<updatedWindows.length;j++) {
+      let win=updatedWindows [j];
+      win.selected=false;
+    }
 
     for (let i=0;i<updatedWindows.length;i++) {
       let win=updatedWindows [i];
@@ -112,6 +141,7 @@ class WindowManager extends React.Component {
         let updated=this.dataTools.deleteElement (updatedWindows,win);
         updated.push (win);
         if (this.props.updateWindows) {
+          win.selected=true;
           this.props.updateWindows (updated);
           return;
         }
@@ -126,6 +156,14 @@ class WindowManager extends React.Component {
     let windows=[];
     let zIndex=1;
 
+    for (var k=0;k<this.props.windows.length;k++) {
+      let aTemplate=this.props.windows [k];
+
+      if (aTemplate.maximized==true) {
+        return (aTemplate.content);
+      }
+    }
+
     for (var i=0;i<this.props.windows.length;i++) {
       let aTemplate=this.props.windows [i];
 
@@ -133,7 +171,7 @@ class WindowManager extends React.Component {
         if (aTemplate.content) {
           if (aTemplate.shown==true) {
             let reference="win"+aTemplate.index;      
-            windows.push (<WindowApplication settings={this.props.settings} ref={reference} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</WindowApplication>);      
+            windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.content}</WindowApplication>);
 
             zIndex++;
           }            

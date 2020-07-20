@@ -56,6 +56,8 @@ import Label from "./widgets/label";
 import Slider from 'react-rangeslider'
 import "../styles/wmgr/widgets/rangeslider.scss";
 
+import DataTools from './tools/datatools';
+
 // https://github.com/zcreativelabs/react-simple-maps
 import {
   ComposableMap,
@@ -75,6 +77,8 @@ class MainWindow extends React.Component {
   constructor () {
     super();
 
+    this.dataTools=new DataTools ();
+
     this.state={
       windowTemplates: [],
       popupDialog: null,
@@ -83,6 +87,8 @@ class MainWindow extends React.Component {
         showGrid: false
       }
     };
+
+    this.hasMaximized = this.hasMaximized.bind(this);
   }
 
   /**
@@ -127,7 +133,6 @@ class MainWindow extends React.Component {
    */
   deleteWindow (targetWindow) {
     console.log ("deleteWindow ("+targetWindow+")");
-
     this.toggleWindow (targetWindow);
   }  
 
@@ -152,7 +157,8 @@ class MainWindow extends React.Component {
       content: aContent,
       icon: anIcon,
       title: aLabel,
-      shown: showWindow
+      shown: showWindow,
+      maximized: false
     };
 
     this.setState(state => {
@@ -216,7 +222,8 @@ class MainWindow extends React.Component {
       x: getRandomInt (10,500),
       y: getRandomInt (10,500),
       content: aContent,
-      shown: true
+      shown: true,
+      selected: false
     };
 
     this.setState(state => {
@@ -400,7 +407,39 @@ class MainWindow extends React.Component {
    *
    */
   updateWindows (newWindowData) {
+    //console.log ("updateWindows ()");
     this.setState ({windowTemplates: newWindowData});    
+  }
+
+  /**
+   *
+   */
+  hasMaximized () {
+    //console.log ("hasMaximized ("+this.state.windowTemplates.length+")");
+
+    for (let j=0;j<this.state.windowTemplates.length;j++) {
+      let win=this.state.windowTemplates [j];
+      if (win.maximized==true) {
+        return (true);
+      }
+    }
+
+    return (false);
+  }
+
+  /**
+   *
+   */
+  maximizeWindow () {
+    console.log ("maximizeWindow ()");
+
+    let updatedWindows=this.dataTools.deepCopy (this.state.windowTemplates);
+
+    for (let j=0;j<updatedWindows.length;j++) {
+      updatedWindows [j].maximized=false;
+    }
+
+    this.updateWindows (updatedWindows);
   }
 
   /**
@@ -427,6 +466,23 @@ class MainWindow extends React.Component {
         desktopWidgets.push (<DesktopWidget key={"desktopwidget-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopWidget>);
       }
     }    
+
+    if (this.hasMaximized ()==true) {
+      return (
+        <div id="desktop" className="desktopContainer">      
+          <MenuBar onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)} />
+          <WindowManager 
+             ref="desktop" 
+             settings={this.state.globalSettings}
+             windows={this.state.windowTemplates}
+             updateWindows={this.updateWindows.bind(this)}
+             deleteWindow={this.deleteWindow.bind(this)}
+             addWindow={this.addWindow.bind(this)}
+             addDialog={this.addDialog.bind(this)}
+             addModal={this.addModal.bind(this)}>          
+          </WindowManager>          
+        </div>);
+    }
  
     return (
       <div id="desktop" className="desktopContainer">

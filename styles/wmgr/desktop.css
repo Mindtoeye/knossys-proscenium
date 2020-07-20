@@ -31,4 +31,7 @@
   /*display: flex;*/
   height: 100%;
   overflow: hidden;
+  -webkit-box-shadow: inset 0px 0px 17px -7px rgba(0,0,0,0.59);
+  -moz-box-shadow: inset 0px 0px 17px -7px rgba(0,0,0,0.59);
+  box-shadow: inset 0px 0px 17px -7px rgba(0,0,0,0.59);  
 }

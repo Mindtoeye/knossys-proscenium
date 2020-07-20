@@ -37,6 +37,8 @@ export class WindowApplication extends React.Component {
     this.resizeStart=this.resizeStart.bind(this);
     this.resize=this.resize.bind(this);
     this.stopResize=this.stopResize.bind(this);    
+
+    this.maximizeWindow=this.maximizeWindow.bind(this);
   }
 
   /**
@@ -52,6 +54,20 @@ export class WindowApplication extends React.Component {
     if (currentResizer!=null) {
       currentResizer.addEventListener('mousedown', this.resizeStart);
     }
+  }
+
+  /**
+   *
+   */
+  maximizeWindow (e,anId) {
+    //console.log ("maximizeWindow("+anId+")");
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.props.maximizeWindow) {
+      this.props.maximizeWindow (anId);
+    }    
   }
   
   /**
@@ -143,11 +159,16 @@ export class WindowApplication extends React.Component {
     let aWidth=this.props.width;
     let aHeight=this.props.height;    
     let title=("Knossys: " + this.props.id);
-
-    //console.log ("id: " + this.props.id);
+    let titleClass="macribbon handle titlebar";
 
     if (this.props.title) {
       title=this.props.title;
+    }
+
+    if (this.props.windowReference) {
+      if (this.props.windowReference.selected==true) {
+        titleClass="macribbonselected handle titlebar";
+      }
     }
 
     let windowContent = "windowAppContent";
@@ -155,8 +176,10 @@ export class WindowApplication extends React.Component {
     return (
       <Draggable handle=".titlebar" defaultPosition={{x: 0, y: 0}} scale={1}>
         <div className="genericWindow unselectable" style={{left: xPos, top: yPos, width: aWidth, height: aHeight}} onClick={() => this.props.popWindow(this.props.id)} id={this.props.id}>
-          <div className="macribbon handle titlebar" onClick={() => this.props.popWindow(this.props.id)}>
+          <div className={titleClass} onClick={() => this.props.popWindow(this.props.id)}>
+            <div className="titlecontent">
             {title}
+            </div>
             <div className="standardCloseButton" onClick={() => this.props.deleteWindow(this.props.id)}>
               <svg width="12" height="12" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <line x1="1" y1="11" 
@@ -170,7 +193,7 @@ export class WindowApplication extends React.Component {
               </svg>
             </div>
 
-            <div className="standardMaximizeButton" onClick={() => this.props.maximizeWindow(this.props.id)}>          
+            <div className="standardMaximizeButton" onClick={(e) => this.maximizeWindow(e,this.props.id)}>          
               <svg version="1.1" width="12" height="12" xmlns="http://www.w3.org/2000/svg" x="200px" y="200px" viewBox="0 0 1000 1000" data-copyright="Icon made from http://www.onlinewebfonts.com/icon is licensed by CC BY 3.0">
                 <g>
                   <g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">

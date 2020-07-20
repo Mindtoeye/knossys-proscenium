@@ -177,7 +177,7 @@
 
 .titlecontent {
   height: 20px;
-  
+
   font-size: 8pt;
   text-align: left;
   /*line-height: 17px;*/
@@ -209,6 +209,8 @@
 
   border: 1px inset #717171;
   color: #c5c5c5;
+  
+  line-height: 12pt;
   font-size: 8pt;
 
   /* To make space for the gripper */

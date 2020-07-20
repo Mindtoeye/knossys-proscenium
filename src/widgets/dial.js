@@ -20,13 +20,32 @@ export class Dial extends React.Component {
     super(props);
 
     this.state={
-      value: 40
+      value: 40,
+      timerId: -1
     }
+  }
 
-    setInterval (() => { 
+  /**
+   *
+   */
+  componentDidMount() {
+    console.log ("componentDidMount()");
+
+    let timerId=setInterval (() => { 
       let newValue=getRandomInt (0,180);
       this.setState ({value: newValue});
     },1000);
+
+    this.setState ({timerId: timerId});
+  }  
+
+  /**
+   *
+   */
+  componentWillUnmount() {
+    console.log ("componentWillUnmount("+this.state.timerId+")");
+
+    clearInterval (this.state.timerId);
   }
 
   /**

@@ -33,7 +33,7 @@
     "webpack-dev-server": "^3.4.1"
   },
   "dependencies": {
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "react-color": "^2.17.3",
     "react-cytoscapejs": "^1.1.0",
     "react-draggable": "^3.3.0",

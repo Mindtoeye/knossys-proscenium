@@ -41,6 +41,7 @@ export default class MenuBar extends React.Component {
 	  console.log ("showAbout ()");
 	
 	  this.refs.dropdown.hide();
+    this.refs.dropdown1.hide();
   }  
   
   /**
@@ -50,6 +51,7 @@ export default class MenuBar extends React.Component {
 	  console.log ("showStatus ()");
 	
 	  this.refs.dropdown.hide();
+    this.refs.dropdown1.hide();
 
     if (typeof this.props.onShowStatus === 'function') {
       this.props.onShowStatus();
@@ -63,6 +65,7 @@ export default class MenuBar extends React.Component {
     console.log ("showGrid ()");
   
     this.refs.dropdown.hide();
+    this.refs.dropdown1.hide();
 
     if (typeof this.props.showGrid === 'function') {
       this.props.showGrid();
@@ -78,6 +81,7 @@ export default class MenuBar extends React.Component {
 	  console.log ("handleLogout ()");
 	
     this.refs.dropdown.hide();
+    this.refs.dropdown1.hide();
     
     if (typeof this.props.onLogout === 'function') {
       this.props.onLogout(e.target.value);
@@ -125,6 +129,32 @@ export default class MenuBar extends React.Component {
   /**
    *
    */
+  chooseTool () {
+    console.log ("chooseTool ()");
+
+  }
+
+  /**
+   *
+   */
+  generateToolsMap () {
+    let toolsMap=[];
+
+    if (this.props.apps) {
+      for (let i=0;i<this.props.apps.length;i++) {
+        let app=this.props.apps [i];
+        if ((app.type=="panel") || (app.type=="widget")) {
+          toolsMap.push (<li key={"tool-"+i}><a href="#" onClick={this.chooseTool.bind(this)}>{app.name}</a></li>);
+        }
+      }
+    }
+
+    return(toolsMap);
+  }
+
+  /**
+   *
+   */
   render() {
   	let username="anonymous";
     let maximizeButton;
@@ -145,6 +175,8 @@ export default class MenuBar extends React.Component {
         </div>;
     }
 
+    let toolsMap=this.generateToolsMap ();
+
     const versionInfo=new Version ().toString();
 
     return (
@@ -158,6 +190,18 @@ export default class MenuBar extends React.Component {
         <div className="menuInfo">
         logged in as: {username}
         </div>        
+        <div className="menuVerticalSeparator">|</div>
+        <div className="menuInfo" style={{width: "32px", cursor: "pointer"}}>
+          <Dropdown ref="dropdown1">
+            <DropdownTrigger>Tools</DropdownTrigger>
+            <DropdownContent>
+              <ul>
+              {toolsMap}
+              </ul>
+            </DropdownContent>
+          </Dropdown>          
+        </div>        
+        <div className="menuVerticalSeparator">|</div>
         <div className="menuSettings">
           <Dropdown ref="dropdown">
             <DropdownTrigger><img src={settings} /> </DropdownTrigger>

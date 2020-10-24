@@ -483,11 +483,32 @@ class MainWindow extends React.Component {
           </WindowManager>          
         </div>);
     }
+
+    let testPanel;
+
+    /*
+    testPanel=<DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={300}>
+      <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
+      <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
+      <button className="defaultButton" onClick={this.addModalDialog.bind(this)}>Add Modal Dialog</button><br/>
+      <button className="defaultButton" onClick={this.addMapWindow.bind(this)}>Add Map Window</button><br/>
+      <br/>
+      <button className="defaultButton">Button Default</button><br/>
+      <button className="largeButton">Button Large</button><br/>
+      <Switch />
+      <ToggleButton /><br />
+      <RadioButton /><br />
+      <Slider
+       min={0}
+       max={100}
+       value={50}/>
+    </DesktopPanel>;
+    */
  
     return (
       <div id="desktop" className="desktopContainer">
         
-        <MenuBar onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
+        <MenuBar apps={window.apps} onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
 
         <WindowManager 
            ref="desktop" 
@@ -499,23 +520,7 @@ class MainWindow extends React.Component {
            addDialog={this.addDialog.bind(this)}
            addModal={this.addModal.bind(this)}>
 
-          <DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={300}>
-            <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
-            <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
-            <button className="defaultButton" onClick={this.addModalDialog.bind(this)}>Add Modal Dialog</button><br/>
-            <button className="defaultButton" onClick={this.addMapWindow.bind(this)}>Add Map Window</button><br/>
-            <br/>
-            <button className="defaultButton">Button Default</button><br/>
-            <button className="largeButton">Button Large</button><br/>
-            <Switch />
-            <ToggleButton /><br />
-            <RadioButton /><br />
-            <Slider
-              min={0}
-              max={100}
-              value={50}
-            />
-          </DesktopPanel>        
+          {testPanel}   
 
           {desktopWidgets}
 

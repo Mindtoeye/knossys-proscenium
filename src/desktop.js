@@ -29,11 +29,12 @@ class Desktop extends React.Component {
   /**
    *
    */
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this.state={
       appState: 0,
+      appManager: this.props.appmanager,
       appTimeout: 0,
       serviceState : {
         prosceniumEnabled: false,
@@ -42,6 +43,11 @@ class Desktop extends React.Component {
         mainEnabled: false,
         sparkEnabled: false
       }
+    };
+
+    if (this.state.appManager) {
+      console.log ("Initializing application manager ...");
+      this.state.appManager.build();
     }
 
     tId=setInterval (() => {
@@ -123,7 +129,9 @@ class Desktop extends React.Component {
       return (<LoginDialog onLogin={this.onLogin.bind(this)} />);
     }    
 
-    return (<MainWindow apps={this.props.apps} onLogout={this.onLogout.bind(this)} />);
+    //return (<MainWindow apps={this.props.apps} onLogout={this.onLogout.bind(this)} />);
+
+    return (<MainWindow apps={window.apps} onLogout={this.onLogout.bind(this)} />);
   }
 }
 

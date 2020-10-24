@@ -23,7 +23,7 @@
   -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
   -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
   box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #565555;;
 
   display: flex;
@@ -37,7 +37,7 @@
   -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
   -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
   box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #807f7f;
 
   display: flex;
@@ -59,7 +59,7 @@
 .desktopWidget {
   background-color: var(--main-widget-background);
   position: absolute;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #565656;
   -webkit-box-shadow: inset 0px 0px 21px 8px rgba(0,0,0,0.16);
   -moz-box-shadow: inset 0px 0px 21px 8px rgba(0,0,0,0.16);
@@ -73,7 +73,7 @@
 .desktopPanel {
   background-color: var(--main-window-content);
   position: absolute;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #656363;
 
   -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
@@ -140,9 +140,9 @@
   padding-left: 4px;
   padding-right: 4px;
   background: var(--main-window-title);
-  border-radius: 5px 5px 0px 0px;
-  -moz-border-radius: 5px 5px 0px 0px;
-  -webkit-border-radius: 5px 5px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
   
   color: #989898;
   
@@ -160,9 +160,9 @@
   padding-left: 4px;
   padding-right: 4px;
   background: var(--main-window-title);
-  border-radius: 5px 5px 0px 0px;
-  -moz-border-radius: 5px 5px 0px 0px;
-  -webkit-border-radius: 5px 5px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
   color: white;
   
   font-size: 8pt;

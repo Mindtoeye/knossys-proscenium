@@ -30,18 +30,51 @@ export default class MenuBar extends React.Component {
     this.showStatus = this.showStatus.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleFullscreen = this.handleFullscreen.bind(this);    
-    //this.showGrid = this.showGrid.bind(this);  
     this.maximizeWindow = this.maximizeWindow.bind(this);
+    this.chooseTool = this.chooseTool.bind(this);
+    this.chooseSetting = this.chooseSetting.bind(this);
+  }
+
+  /**
+   *
+   */
+  chooseSetting (menuIndex,e) {
+    console.log ("chooseSetting ("+menuIndex+")");
+        
+    this.refs.dropdown.hide();
+
+    if (menuIndex==1) {
+      this.showAbout ();
+    }
+
+    if (menuIndex==2) {
+      this.showStatus ();
+    }
+    
+    if (menuIndex==3) {
+      this.showGrid ();
+    }
+    
+    if (menuIndex==4) {
+      this.handleLogout (e);
+    }            
+  }
+
+  /**
+   *
+   */
+  chooseTool (menuIndex) {
+    console.log ("chooseTool ("+menuIndex+")");
+
+    this.refs.dropdown1.hide();
+
   }
 
   /**
    * 
    */
-  showAbout (e) {
+  showAbout () {
 	  console.log ("showAbout ()");
-	
-	  this.refs.dropdown.hide();
-    this.refs.dropdown1.hide();
   }  
   
   /**
@@ -50,9 +83,6 @@ export default class MenuBar extends React.Component {
   showStatus () {
 	  console.log ("showStatus ()");
 	
-	  this.refs.dropdown.hide();
-    this.refs.dropdown1.hide();
-
     if (typeof this.props.onShowStatus === 'function') {
       this.props.onShowStatus();
     }    
@@ -64,9 +94,6 @@ export default class MenuBar extends React.Component {
   showGrid () {
     console.log ("showGrid ()");
   
-    this.refs.dropdown.hide();
-    this.refs.dropdown1.hide();
-
     if (typeof this.props.showGrid === 'function') {
       this.props.showGrid();
     } else {
@@ -79,10 +106,7 @@ export default class MenuBar extends React.Component {
    */  
   handleLogout (e) {
 	  console.log ("handleLogout ()");
-	
-    this.refs.dropdown.hide();
-    this.refs.dropdown1.hide();
-    
+	    
     if (typeof this.props.onLogout === 'function') {
       this.props.onLogout(e.target.value);
     }    
@@ -129,14 +153,6 @@ export default class MenuBar extends React.Component {
   /**
    *
    */
-  chooseTool () {
-    console.log ("chooseTool ()");
-
-  }
-
-  /**
-   *
-   */
   generateToolsMap () {
     let toolsMap=[];
 
@@ -144,7 +160,7 @@ export default class MenuBar extends React.Component {
       for (let i=0;i<this.props.apps.length;i++) {
         let app=this.props.apps [i];
         if ((app.type=="panel") || (app.type=="widget")) {
-          toolsMap.push (<li key={"tool-"+i}><a href="#" onClick={this.chooseTool.bind(this)}>{app.name}</a></li>);
+          toolsMap.push (<li key={"tool-"+i}><a href="#" onClick={(e) => this.chooseTool (i)}>{app.name}</a></li>);
         }
       }
     }
@@ -192,7 +208,7 @@ export default class MenuBar extends React.Component {
         </div>        
         <div className="menuVerticalSeparator">|</div>
         <div className="menuInfo" style={{width: "32px", cursor: "pointer"}}>
-          <Dropdown ref="dropdown1">
+          <Dropdown ref="dropdown1" style={{textAlign: "left"}}>
             <DropdownTrigger>Tools</DropdownTrigger>
             <DropdownContent>
               <ul>
@@ -203,21 +219,21 @@ export default class MenuBar extends React.Component {
         </div>        
         <div className="menuVerticalSeparator">|</div>
         <div className="menuSettings">
-          <Dropdown ref="dropdown">
+          <Dropdown ref="dropdown" style={{textAlign: "left"}}>
             <DropdownTrigger><img src={settings} /> </DropdownTrigger>
             <DropdownContent>
               <ul>
                   <li>
-                      <a href="#" onClick={this.showAbout}>About</a>
+                      <a href="#" onClick={(e) => this.chooseSetting (1,e)}>About</a>
                   </li>
                   <li>
-                      <a href="#" onClick={this.showStatus}>System Status</a>
+                      <a href="#" onClick={(e) => this.chooseSetting (2,e)}>System Status</a>
                   </li>
                   <li>
-                      <a href="#" onClick={this.showGrid.bind(this)}>Show Hide Grid</a>
+                      <a href="#" onClick={(e) => this.chooseSetting (3,e)}>Show Hide Grid</a>
                   </li>
                   <li>
-                      <a href="#" onClick={this.handleLogout}>Log Out</a>
+                      <a href="#" onClick={(e) => this.chooseSetting (4,e)}>Log Out</a>
                   </li>
               </ul>
             </DropdownContent>

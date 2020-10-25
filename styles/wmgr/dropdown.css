@@ -6,7 +6,7 @@
 .dropdown__content {
   display: none;
   position: absolute;
-  position: fixed;
+  /*position: fixed;*/
   right: 0px;
   border: 1px solid grey;
   background: #5d5b5b;
@@ -17,6 +17,7 @@
 
 .dropdown--active .dropdown__content {
   display: block;
+  z-index: 5000 !important;
 }
 
 .dropdown ul {

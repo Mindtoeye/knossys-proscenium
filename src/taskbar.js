@@ -69,6 +69,7 @@ export default class TaskBar extends React.Component {
    */
   render() {
     let arrow;
+    let apps=this.props.appmanager.getAppReference ();
           
     if (this.state.folded==false) {
       arrow=<div className="taskbarGripper" onClick={this.onArrowClicked}><img src={arrowDown} className="taskbarGripperIconStyle" /></div>
@@ -78,10 +79,10 @@ export default class TaskBar extends React.Component {
     
     let icons=null;
 
-    if (this.props.windows.length>0) {
+    if (apps.length>0) {
       icons=[];
-      for (let i=0;i<this.props.windows.length;i++) {
-        let app=this.props.windows [i];
+      for (let i=0;i<apps.length;i++) {
+        let app=apps [i];
 
         if (app.icon) {
           icons.push (<TaskBarIcon key={"icon"+i} tsize={this.state.taskbarSize} icon={app.icon} title={app.title} appId={app.id} iconClicked={this.onIconClicked}/>);

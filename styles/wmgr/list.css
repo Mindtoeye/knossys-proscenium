@@ -18,16 +18,18 @@ li a {
   text-decoration: none;
   color: var(--main-window-text);
   display: block;
-  width: 200px;
+  min-width: 100px;
  
+ /*
   -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
   -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
   -o-transition: font-size 0.3s ease, background-color 0.3s ease;
   -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
   transition: font-size 0.3s ease, background-color 0.3s ease;
+  */
 }
  
 li a:hover {
-  font-size: 15px;
+  /*font-size: 15px;*/
   /*background: #f6f6f6;*/
 }

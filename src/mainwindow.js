@@ -510,7 +510,7 @@ class MainWindow extends React.Component {
         
         </WindowManager>
 
-        <TaskBar ref="taskbar" onIconClicked={this.toggleWindow.bind(this)} windows={this.state.windowTemplates} />
+        <TaskBar ref="taskbar" appmanager={this.props.appmanager} onIconClicked={this.toggleWindow.bind(this)} windows={this.state.windowTemplates} />
 
         {modalDialog}
 

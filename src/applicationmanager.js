@@ -157,19 +157,6 @@ export default class ApplicationManager extends ApplicationDriver {
 
   	this.pushApps ();
 
-    /*
-    for (let i=0;i<window.drivers.length;i++) {
-      let aDriver=window.drivers [i];
-
-      let windowSpecs=aDriver.init();
-      if (windowSpecs!=null) {
-        this.addApplication (windowSpecs);      
-      } else {
-      	console.log ("Init action did not result in a new window object");
-      }
-    }
-    */
-
     this.addApplication ({
       window:<FSMEditor />,
       application: null,

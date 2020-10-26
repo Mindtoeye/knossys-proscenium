@@ -448,22 +448,27 @@ class MainWindow extends React.Component {
   render() {
     let modalDialog=this.state.popupDialog;
     let taskbar=this.state.taskbar;
+    let apps=this.props.appmanager.getAppReference ();
 
     var desktopPanels=[];
 
-    for (var i=0;i<this.props.apps.length;i++) {
-      var appTester=this.props.apps [i];
+    for (var i=0;i<apps.length;i++) {
+      var appTester=apps [i];
       if (appTester.type=="panel") {
-        desktopPanels.push (<DesktopPanel key={"desktoppanel-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopPanel>);
+        if (appTester.shown==true) {
+          desktopPanels.push (<DesktopPanel key={"desktoppanel-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopPanel>);
+        }
       }
     }
 
     var desktopWidgets=[];
 
-    for (var i=0;i<this.props.apps.length;i++) {
-      var appTester=this.props.apps [i];
+    for (var i=0;i<apps.length;i++) {
+      var appTester=apps [i];
       if (appTester.type=="widget") {
-        desktopWidgets.push (<DesktopWidget key={"desktopwidget-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopWidget>);
+        if (appTester.shown==true) {
+          desktopWidgets.push (<DesktopWidget key={"desktopwidget-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopWidget>);
+        }
       }
     }    
 
@@ -483,32 +488,11 @@ class MainWindow extends React.Component {
           </WindowManager>          
         </div>);
     }
-
-    let testPanel;
-
-    /*
-    testPanel=<DesktopPanel title="UI Elements" xPos={700} yPos={50} width={400} height={300}>
-      <button className="defaultButton" onClick={this.addAnonymousWindow.bind(this)}>Add Content Window</button><br/>
-      <button className="defaultButton" onClick={this.addAnonymousDialog.bind(this)}>Add Dialog Window</button><br/>
-      <button className="defaultButton" onClick={this.addModalDialog.bind(this)}>Add Modal Dialog</button><br/>
-      <button className="defaultButton" onClick={this.addMapWindow.bind(this)}>Add Map Window</button><br/>
-      <br/>
-      <button className="defaultButton">Button Default</button><br/>
-      <button className="largeButton">Button Large</button><br/>
-      <Switch />
-      <ToggleButton /><br />
-      <RadioButton /><br />
-      <Slider
-       min={0}
-       max={100}
-       value={50}/>
-    </DesktopPanel>;
-    */
  
     return (
       <div id="desktop" className="desktopContainer">
         
-        <MenuBar apps={window.apps} onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
+        <MenuBar appmanager={this.props.appmanager} onLogout={this.props.onLogout} showGrid={this.showGrid.bind(this)} />
 
         <WindowManager 
            ref="desktop" 
@@ -519,8 +503,6 @@ class MainWindow extends React.Component {
            addWindow={this.addWindow.bind(this)}
            addDialog={this.addDialog.bind(this)}
            addModal={this.addModal.bind(this)}>
-
-          {testPanel}   
 
           {desktopWidgets}
 

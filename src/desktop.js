@@ -10,6 +10,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import DataTools from "./tools/datatools";
+import ApplicationManager from "./applicationmanager";
+
 import MainWindow from "./mainwindow";
 import LoginDialog from "./login";
 import ConnectionDialog from "./connect";
@@ -33,8 +36,9 @@ class Desktop extends React.Component {
     super(props);
 
     this.state={
+      apps: [],
+      drivers: [],
       appState: 0,
-      appManager: this.props.appmanager,
       appTimeout: 0,
       serviceState : {
         prosceniumEnabled: false,
@@ -45,10 +49,22 @@ class Desktop extends React.Component {
       }
     };
 
+    this.setDriverData=this.setDriverData.bind(this);
+    this.getDriverData=this.getDriverData.bind(this);
+    this.getDriverReference=this.getDriverReference.bind(this);
+    this.setAppData=this.setAppData.bind(this);
+    this.getAppData=this.getAppData.bind(this);
+    this.getAppReference=this.getAppReference.bind(this);
+
+    this.dataTools = new DataTools ();
+    window.appManager = new ApplicationManager (this.setDriverData,this.getDriverData,this.getDriverReference,this.setAppData,this.getAppData,this.getAppReference);
+
+    /*
     if (this.state.appManager) {
       console.log ("Initializing application manager ...");
       this.state.appManager.build();
     }
+    */
 
     tId=setInterval (() => {
       let t=this.state.appTimeout;
@@ -101,6 +117,65 @@ class Desktop extends React.Component {
   }
 
   /**
+  *
+  */
+  componentDidMount () {
+    console.log ("componentDidMount");
+
+    window.appManager.build();
+  }  
+
+  /**
+   *
+   */
+  setDriverData (newData, aCallback) {
+    this.setState ({drivers: newData},() => {
+      if(aCallback) {
+        aCallback();
+      }
+    });
+  }
+
+  /**
+   *
+   */
+  getDriverData () {
+    return (this.dataTools.deepCopy (this.state.drivers));
+  }
+
+  /**
+   *
+   */
+  getDriverReference () {
+    return (this.state.drivers);
+  }  
+
+  /**
+   *
+   */
+  setAppData (newData, aCallback) {
+    this.setState ({apps: newData}, () => {
+      if (aCallback) {
+        aCallback ();
+      }
+    });
+  }
+
+  /**
+   *
+   */
+  getAppData () {
+    return (this.dataTools.deepCopy (this.state.apps));
+  }
+
+  /**
+   *
+   */
+  getAppReference () {
+    return (this.state.apps);
+  }    
+
+  /**
    *
    */
   onLogin () {
@@ -129,9 +204,7 @@ class Desktop extends React.Component {
       return (<LoginDialog onLogin={this.onLogin.bind(this)} />);
     }    
 
-    //return (<MainWindow apps={this.props.apps} onLogout={this.onLogout.bind(this)} />);
-
-    return (<MainWindow apps={window.apps} onLogout={this.onLogout.bind(this)} />);
+    return (<MainWindow appmanager={window.appManager} onLogout={this.onLogout.bind(this)} />);
   }
 }
 

@@ -15,6 +15,8 @@ import Chart from 'react-google-charts';
 // https://casesandberg.github.io/react-color/
 import { SketchPicker } from 'react-color';
 
+import { uuidv4 } from './tools/uuid';
+
 const dataA = [
   ["Age", "Weight"],
   [8, 12],
@@ -90,8 +92,17 @@ export default class ApplicationManager extends ApplicationDriver {
   /**
    *
    */	
-  constructor () {
+  constructor (aSetDriverData,aGetDriverData,aGetDriverReference,aSetAppData,aGetAppData,aGetAppReference) {
   	super ();
+
+  	this.apps=null;
+
+  	this.setDriverData=aSetDriverData;
+  	this.getDriverData=aGetDriverData;
+  	this.getDriverReference=aGetDriverReference;
+  	this.setAppData=aSetAppData;
+  	this.getAppData=aGetAppData;
+  	this.getAppReference=aGetAppReference;
   }
 
   /**
@@ -104,9 +115,49 @@ export default class ApplicationManager extends ApplicationDriver {
   /**
    *
    */
+  toggle (anId) {
+    console.log ("toggle ("+anId+")");
+
+    let appData=this.getAppData();
+
+    for (let i=0;i<appData.length;i++) {
+      let app=appData [i];
+
+      if (app.id==anId) {
+      	if (app.shown==true) {
+      	  app.shown=false;
+      	} else {
+      	  app.shown=true;
+      	}
+      }
+    }
+
+    this.setAppData (appData);
+  }
+
+  /**
+   *
+   */
+  pushApps () {
+  	this.apps=this.getAppData ();
+  }
+
+  /**
+   *
+   */
+  popApps () {
+    this.setAppData (this.apps,() => {});	
+  }
+
+  /**
+   *
+   */
   build () {
   	console.log ("build ()");
 
+  	this.pushApps ();
+
+    /*
     for (let i=0;i<window.drivers.length;i++) {
       let aDriver=window.drivers [i];
 
@@ -117,13 +168,13 @@ export default class ApplicationManager extends ApplicationDriver {
       	console.log ("Init action did not result in a new window object");
       }
     }
+    */
 
     this.addApplication ({
       window:<FSMEditor />,
       application: null,
       icon: iconFinite,
       name: "FSM Editor",
-      shown: false,
       type: "window"
     });
 
@@ -131,7 +182,6 @@ export default class ApplicationManager extends ApplicationDriver {
       window:<SketchPicker />, 
       application: null,
       name: "Color Chooser",
-      shown: true,
       type: "panel",
       x: 50,
       y: 50
@@ -141,7 +191,6 @@ export default class ApplicationManager extends ApplicationDriver {
       window:<Chart width={300} height={300} chartType="ScatterChart" data={dataA} options={options} legendToggle />, 
       application: null,
       name: "Chart (error)",
-      shown: true,
       type: "panel",
       x: 700,
       y: 400
@@ -152,7 +201,6 @@ export default class ApplicationManager extends ApplicationDriver {
       application: null,
       name: "Net Speed",
       label: "Net Speed",
-      shown: true,
       type: "widget",
       x: 50,
       y: 420
@@ -162,7 +210,6 @@ export default class ApplicationManager extends ApplicationDriver {
       window:<DigitalClock zones="Los Angeles:US/Pacific,New York:US/Eastern,Tokyo:Asia/Tokyo,Amsterdam:Europe/Amsterdam" />, 
       application: null,
       name: "Digital Clock",
-      shown: true,
       type: "widget",
       x: 450,
       y: 50
@@ -173,7 +220,6 @@ export default class ApplicationManager extends ApplicationDriver {
       application: null,
       name: "Analog Clock",
       label: "Local Time",
-      shown: true,
       type: "widget",
       x: 300,
       y: 50
@@ -183,24 +229,24 @@ export default class ApplicationManager extends ApplicationDriver {
       window:<Chart width={300} height={300} chartType="LineChart" data={dataB} loader={<div>Loading Chart</div>} options={options}/>, 
       application: null,
       name: "Chart (Line)",
-      shown: true,
       type: "panel",
       x: 300,
       y: 400
-    });  	
+    });
+
+    this.popApps ();
   }
 
   /**
    *
    */
-  addApplication (anApplication) {
-  	if (!window.apps) {
-  	  window.apps=[];	
-  	}
-
-  	if (window.apps!=null) {
-      apps.push (anApplication);
+  addApplication (anApplication, aCallback) {
+    if (this.apps==null) {
+      this.pushApps ();	
     }
-  }
 
+    anApplication.shown=false;
+    anApplication.id=uuidv4();
+    this.apps.push (anApplication);
+  }
 };

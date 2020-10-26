@@ -31,8 +31,8 @@
 }
 
 .dropdown li a:hover {
-  color:White;
-  background-color:#dddddd;
+  color: #292929;
+  background-color: #8e8c8c;
 }
 
 .dropdown a:link {
@@ -57,5 +57,5 @@
 }
 
 .dropdown a:hover {
-  color: white;
+  color: #292929;
 }

@@ -63,11 +63,14 @@ export default class MenuBar extends React.Component {
   /**
    *
    */
-  chooseTool (menuIndex) {
-    console.log ("chooseTool ("+menuIndex+")");
+  chooseTool (toolId) {
+    console.log ("chooseTool ("+toolId+")");
 
     this.refs.dropdown1.hide();
 
+    if (this.props.appmanager) {
+      this.props.appmanager.toggle (toolId);
+    }
   }
 
   /**
@@ -156,11 +159,13 @@ export default class MenuBar extends React.Component {
   generateToolsMap () {
     let toolsMap=[];
 
-    if (this.props.apps) {
-      for (let i=0;i<this.props.apps.length;i++) {
-        let app=this.props.apps [i];
+    let apps=this.props.appmanager.getAppReference ();
+
+    if (apps) {
+      for (let i=0;i<apps.length;i++) {
+        let app=apps [i];
         if ((app.type=="panel") || (app.type=="widget")) {
-          toolsMap.push (<li key={"tool-"+i}><a href="#" onClick={(e) => this.chooseTool (i)}>{app.name}</a></li>);
+          toolsMap.push (<li key={"tool-"+i}><a href="#" onClick={(e) => this.chooseTool (app.id)}>{app.name}</a></li>);
         }
       }
     }

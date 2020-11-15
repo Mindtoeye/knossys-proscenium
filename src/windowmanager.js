@@ -189,6 +189,8 @@ class WindowManager extends React.Component {
    *
    */
   render() {
+    console.log ("WindowManager:render()");
+
     let windows=[];
     let zIndex=1;
 
@@ -207,10 +209,10 @@ class WindowManager extends React.Component {
       let aTemplate=windowReferences [i];
 
       if (aTemplate.type=="window") {
-        if (aTemplate.content) {
+        if (aTemplate.window) {
           if (aTemplate.shown==true) {
             let reference="win"+aTemplate.index;      
-            windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.content}</WindowApplication>);
+            windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
 
             zIndex++;
           }            

@@ -32,14 +32,23 @@ export default class TaskBar extends React.Component {
   }
 
   /**
+   *
+   */
+  componentDidMount () {
+    console.log ("componentDidMount");
+    
+    this.setState ({folded: false, taskbarSize: "medium", barHeight: heightFull});  
+  }  
+
+  /**
    * 
    */
   onIconClicked (id) {
     //console.log ("onIconClicked ("+id+")");
     
-    if (this.props.onIconClicked) {
-      this.props.onIconClicked(id);
-    }    
+    if (this.props.appmanager) {
+      this.props.appmanager.toggle (id);
+    }
   }
 
   /**
@@ -85,7 +94,7 @@ export default class TaskBar extends React.Component {
         let app=apps [i];
 
         if (app.icon) {
-          icons.push (<TaskBarIcon key={"icon"+i} tsize={this.state.taskbarSize} icon={app.icon} title={app.title} appId={app.id} iconClicked={this.onIconClicked}/>);
+          icons.push (<TaskBarIcon key={"icon"+i} tsize={this.state.taskbarSize} icon={app.icon} title={app.name} appId={app.id} iconClicked={this.onIconClicked}/>);
         }
 
         /*

@@ -109,7 +109,7 @@ export default class ApplicationManager extends ApplicationDriver {
    *
    */
   init () {
-	return (null);
+	  return (null);
   }
 
   /**
@@ -120,10 +120,15 @@ export default class ApplicationManager extends ApplicationDriver {
 
     let appData=this.getAppData();
 
+    //console.log (appData);
+
     for (let i=0;i<appData.length;i++) {
       let app=appData [i];
 
+      //console.log ("Comparing " + app.id + ", to: " + anId);
+
       if (app.id==anId) {
+        console.log ("Changing visibility of application ...");
       	if (app.shown==true) {
       	  app.shown=false;
       	} else {
@@ -233,6 +238,7 @@ export default class ApplicationManager extends ApplicationDriver {
     }
 
     anApplication.shown=false;
+    anApplication.maximized=false;
     anApplication.id=uuidv4();
     this.apps.push (anApplication);
   }

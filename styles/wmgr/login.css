@@ -1,7 +1,7 @@
 
 .loginWindow {
   width: 320px;
-  height: 200px;
+  height: 170px;
   background-color: #525252;
   position: absolute;
   top: 0;
@@ -22,12 +22,13 @@
   padding: 20px;
 }
 
-.textinput {
+.logintextinput {
   background: #757474;
   border: 1px inset #9e9d9d;
   padding: 4px;
   margin: 4px;
   color: #ffffff;
+  width: 75%;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

@@ -104,6 +104,21 @@ class WindowManager extends React.Component {
   maximizeWindow (targetWindow) {
     //console.log ("maximizeWindow("+targetWindow+")");
 
+    let list=this.props.appmanager.getAppData ();
+
+    for (let j=0;j<list.length;j++) {
+      list [j].maximized=false;
+    }
+
+    for (let i=0;i<list.length;i++) {
+      if (list [i].id==targetWindow) {
+        list [i].maximized=true;
+      }
+    }    
+
+    this.props.appmanager.setAppData (list);
+
+    /*
     let updatedWindows=this.dataTools.deepCopy (this.props.windows);
 
     for (let j=0;j<updatedWindows.length;j++) {
@@ -119,7 +134,8 @@ class WindowManager extends React.Component {
           return;
         }
       }
-    }    
+    } 
+    */   
   }
 
   /**
@@ -128,6 +144,25 @@ class WindowManager extends React.Component {
   popWindow (targetWindow) {
     //console.log ("popWindow("+targetWindow+")");
 
+    let list=this.props.appmanager.getAppData ();
+
+    for (let j=0;j<list.length;j++) {
+      list [j].selected=false;
+    }
+
+    for (let i=0;i<list.length;i++) {
+      let win=updatedWindows [i];
+      if (win.id==targetWindow) {
+        let updated=this.dataTools.deleteElement (list,win);
+        updated.push (win);
+        win.selected=true;
+        this.props.list (updated);
+      }
+    }    
+
+    this.props.appmanager.setAppData (list);    
+
+    /*
     let updatedWindows=this.dataTools.deepCopy (this.props.windows);
 
     for (let j=0;j<updatedWindows.length;j++) {
@@ -147,6 +182,7 @@ class WindowManager extends React.Component {
         }
       }
     }
+    */
   }
 
   /**
@@ -156,16 +192,19 @@ class WindowManager extends React.Component {
     let windows=[];
     let zIndex=1;
 
-    for (var k=0;k<this.props.windows.length;k++) {
-      let aTemplate=this.props.windows [k];
+    let windowReferences=this.props.appmanager.getAppReference ();
+    //let windowReferences=this.props.apps;
+
+    for (var k=0;k<windowReferences.length;k++) {
+      let aTemplate=windowReferences [k];
 
       if (aTemplate.maximized==true) {
         return (aTemplate.content);
       }
     }
 
-    for (var i=0;i<this.props.windows.length;i++) {
-      let aTemplate=this.props.windows [i];
+    for (var i=0;i<windowReferences.length;i++) {
+      let aTemplate=windowReferences [i];
 
       if (aTemplate.type=="window") {
         if (aTemplate.content) {
@@ -179,8 +218,8 @@ class WindowManager extends React.Component {
       }  
     }
 
-    for (var j=0;j<this.props.windows.length;j++) {
-      let aTemplate=this.props.windows [j];
+    for (var j=0;j<windowReferences.length;j++) {
+      let aTemplate=windowReferences [j];
 
       if (aTemplate.type=="dialog") {
         windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={zIndex*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);

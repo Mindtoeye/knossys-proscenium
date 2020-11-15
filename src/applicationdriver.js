@@ -1,4 +1,6 @@
 
+import DataPermanence from './tools/datapermanence';
+
 /**
  *
  */
@@ -9,6 +11,7 @@ export default class ApplicationDriver {
    */ 
   constructor (self) {
   	this.driver=self;
+  	this.dataPermanence=new DataPermanence ();
   }
 
   /**
@@ -16,7 +19,14 @@ export default class ApplicationDriver {
    */
   init () {
     return (null);
-  }   
+  }
+
+  /**
+   *
+   */
+  getPermanenceDriver () {
+  	return (this.dataPermanence);
+  }
 
   /**
    *

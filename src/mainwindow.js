@@ -80,7 +80,6 @@ class MainWindow extends React.Component {
     this.dataTools=new DataTools ();
 
     this.state={
-      windowTemplates: [],
       popupDialog: null,
       windowIndex: 0,  
       globalSettings: {
@@ -97,6 +96,7 @@ class MainWindow extends React.Component {
   componentDidMount () {
     console.log ("componentDidMount");
 
+    /*
     setTimeout (() => {
       if (this.props.apps) {
         for (var i=0;i<this.props.apps.length;i++) {
@@ -107,6 +107,7 @@ class MainWindow extends React.Component {
         }
       }
     },500);
+    */
   }
 
   /**
@@ -144,6 +145,7 @@ class MainWindow extends React.Component {
 
     let showWindow=true;
     let generatedId=uuidv4();
+
     if(typeof aShown !== 'undefined')  {
       showWindow=aShown;
     }
@@ -164,12 +166,15 @@ class MainWindow extends React.Component {
     this.setState(state => {
       let tempIndex=this.state.windowIndex;
 
-      let list = state.windowTemplates.concat(windowObject);
+      let wins=this.props.appmanager.getAppData ();
+
+      let list = wins.concat(windowObject);
 
       tempIndex++;
 
+      this.props.appmanager.setAppData (list);
+
       return {
-        windowTemplates: list,
         windowIndex: tempIndex
       };
     });    
@@ -196,12 +201,15 @@ class MainWindow extends React.Component {
     this.setState(state => {
       let tempIndex=this.state.windowIndex;
 
-      let list = this.state.windowTemplates.concat(windowObject);
+      //let list = this.state.windowTemplates.concat(windowObject);
+
+      let list=this.props.appmanager.getAppData ().concat (windowObject);
 
       tempIndex++;
 
+      this.props.appmanager.setAppData (list);
+
       return {
-        windowTemplates: list,
         windowIndex: tempIndex
       };
     });    
@@ -229,12 +237,15 @@ class MainWindow extends React.Component {
     this.setState(state => {
       let tempIndex=this.state.windowIndex;
 
-      let list = this.state.windowTemplates.concat(windowObject);
+      //let list = this.state.windowTemplates.concat(windowObject);
+
+      let list=this.props.appmanager.getAppData().concat (windowObject);
 
       tempIndex++;
 
+      this.props.appmanager.setAppData (list);
+
       return {
-        windowTemplates: list,
         windowIndex: tempIndex
       };
     });    
@@ -261,12 +272,15 @@ class MainWindow extends React.Component {
     this.setState(state => {
       let tempIndex=this.state.windowIndex;
 
-      let list = this.state.windowTemplates.concat(windowObject);
+      //let list = this.state.windowTemplates.concat(windowObject);
+
+      let list=this.props.appmanager.getAppData().concat (windowObject);
 
       tempIndex++;
 
+      this.props.appmanager.setAppData (list);
+
       return {
-        windowTemplates: list,
         windowIndex: tempIndex
       };
     });    
@@ -297,30 +311,37 @@ class MainWindow extends React.Component {
   /**
    *
    */
+  /* 
   addAnonymousWindow () {
     console.log ("addAnonymousWindow ()");
     this.refs.desktop.addWindow (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />,null,"Anon Window");
   }
+  */
 
   /**
    *
    */
+  /*
   addAnonymousDialog () {
     console.log ("addAnonymousDialog ()");
     this.refs.desktop.addDialog (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />);
-  }  
+  } 
+  */ 
 
   /**
    *
    */
+  /* 
   addModalDialog () {
     console.log ("addModalDialog ()");
     this.refs.desktop.addModal (<WindowContent label={"Window: [" + this.getWindowIndex () +"]"} />);
-  }  
+  } 
+  */ 
 
   /**
    *
    */
+  /* 
   addMapWindow () {
     console.log ("addMapWindow ()");
     this.refs.desktop.addWindow (<ComposableMap
@@ -368,7 +389,8 @@ class MainWindow extends React.Component {
         </Geographies>
       </ZoomableGroup>
    </ComposableMap>);
-  }  
+  } 
+  */ 
 
   /**
    *
@@ -376,10 +398,13 @@ class MainWindow extends React.Component {
   toggleWindow (id) {
     console.log ("toggleWindow ("+id+")");
 
+    /*  
     for (let i=0;i<this.state.windowTemplates.length;i++) {
       let testWindow=this.state.windowTemplates [i];
 
       if (testWindow.id==id) {
+        console.log ("Found target window, managing state ...");
+
         let newList=this.state.windowTemplates.filter (aWindow => {
           if (aWindow.id==testWindow.id) {
             return (false);
@@ -401,15 +426,38 @@ class MainWindow extends React.Component {
         return;
       }
     }
+    */
+
+    let list=this.props.appManager.getAppData ();
+
+    for (let i=0;i<list.length;i++) {
+      let testWindow=list [i];
+
+      if (testWindow.id==id) {
+        if (testWindow.shown==true) {
+          testWindow.shown=false;
+        } else {
+          testWindow.shown=true;
+        }
+
+        this.props.appmanager.setAppData (list);
+
+        return;
+      }
+    }
+
+    console.log ("Internal error: target window not found");
   }
 
   /**
    *
    */
+  /* 
   updateWindows (newWindowData) {
     //console.log ("updateWindows ()");
     this.setState ({windowTemplates: newWindowData});    
   }
+  */
 
   /**
    *
@@ -417,8 +465,19 @@ class MainWindow extends React.Component {
   hasMaximized () {
     //console.log ("hasMaximized ("+this.state.windowTemplates.length+")");
 
+    /*
     for (let j=0;j<this.state.windowTemplates.length;j++) {
       let win=this.state.windowTemplates [j];
+      if (win.maximized==true) {
+        return (true);
+      }
+    }
+    */
+
+    let list=this.props.appmanager.getAppReference ();
+
+    for (let j=0;j<list.length;j++) {
+      let win=list[j];
       if (win.maximized==true) {
         return (true);
       }
@@ -433,6 +492,7 @@ class MainWindow extends React.Component {
   maximizeWindow () {
     console.log ("maximizeWindow ()");
 
+    /*
     let updatedWindows=this.dataTools.deepCopy (this.state.windowTemplates);
 
     for (let j=0;j<updatedWindows.length;j++) {
@@ -440,6 +500,16 @@ class MainWindow extends React.Component {
     }
 
     this.updateWindows (updatedWindows);
+    */
+
+    let list=this.props.appmanager.getAppData ();
+
+    for (let i=0;i<list.length;i++) {
+      let win=list [i];
+      win.maximized=false;      
+    }
+
+    this.props.appmanager.setAppData (list);
   }
 
   /**
@@ -452,8 +522,8 @@ class MainWindow extends React.Component {
 
     var desktopPanels=[];
 
-    for (var i=0;i<apps.length;i++) {
-      var appTester=apps [i];
+    for (let i=0;i<apps.length;i++) {
+      let appTester=apps [i];
       if (appTester.type=="panel") {
         if (appTester.shown==true) {
           desktopPanels.push (<DesktopPanel key={"desktoppanel-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopPanel>);
@@ -463,8 +533,8 @@ class MainWindow extends React.Component {
 
     var desktopWidgets=[];
 
-    for (var i=0;i<apps.length;i++) {
-      var appTester=apps [i];
+    for (let i=0;i<apps.length;i++) {
+      let appTester=apps [i];
       if (appTester.type=="widget") {
         if (appTester.shown==true) {
           desktopWidgets.push (<DesktopWidget key={"desktopwidget-"+i} title={appTester.name} label={appTester.label} xPos={appTester.x} yPos={appTester.y}>{appTester.window}</DesktopWidget>);
@@ -479,12 +549,7 @@ class MainWindow extends React.Component {
           <WindowManager 
              ref="desktop" 
              settings={this.state.globalSettings}
-             windows={this.state.windowTemplates}
-             updateWindows={this.updateWindows.bind(this)}
-             deleteWindow={this.deleteWindow.bind(this)}
-             addWindow={this.addWindow.bind(this)}
-             addDialog={this.addDialog.bind(this)}
-             addModal={this.addModal.bind(this)}>          
+             appmanager={this.props.appmanager}>          
           </WindowManager>          
         </div>);
     }
@@ -496,13 +561,9 @@ class MainWindow extends React.Component {
 
         <WindowManager 
            ref="desktop" 
+           apps={this.props.apps}
            settings={this.state.globalSettings}
-           windows={this.state.windowTemplates}
-           updateWindows={this.updateWindows.bind(this)}
-           deleteWindow={this.deleteWindow.bind(this)}
-           addWindow={this.addWindow.bind(this)}
-           addDialog={this.addDialog.bind(this)}
-           addModal={this.addModal.bind(this)}>
+           appmanager={this.props.appmanager}>
 
           {desktopWidgets}
 
@@ -510,7 +571,7 @@ class MainWindow extends React.Component {
         
         </WindowManager>
 
-        <TaskBar ref="taskbar" appmanager={this.props.appmanager} onIconClicked={this.toggleWindow.bind(this)} windows={this.state.windowTemplates} />
+        <TaskBar ref="taskbar" appmanager={this.props.appmanager} onIconClicked={this.toggleWindow.bind(this)} apps={this.props.appmanager.getAppReference()} />
 
         {modalDialog}
 

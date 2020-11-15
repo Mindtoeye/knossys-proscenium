@@ -40,9 +40,9 @@ export default class TaskBarIcon extends React.Component {
     } 
       
     return (
-        <div className="iconBaseMedium" onClick={(e) => this.handleIconClicked(this.props.appId)}>   
-          <div className="iconFaceMedium">
-            <img src={this.props.icon} className="iconFaceMedium" />
+        <div className="iconBaseSmall" onClick={(e) => this.handleIconClicked(this.props.appId)}>   
+          <div className="iconFaceSmall">
+            <img src={this.props.icon} className="iconFaceSmall" />
           </div>
           <div className="iconLabel">
             {this.props.title}

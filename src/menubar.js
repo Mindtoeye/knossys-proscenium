@@ -28,6 +28,7 @@ export default class MenuBar extends React.Component {
 
     this.showAbout = this.showAbout.bind(this);
     this.showStatus = this.showStatus.bind(this);
+    this.handleLock = this.handleLock.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleFullscreen = this.handleFullscreen.bind(this);    
     this.maximizeWindow = this.maximizeWindow.bind(this);
@@ -54,8 +55,12 @@ export default class MenuBar extends React.Component {
     if (menuIndex==3) {
       this.showGrid ();
     }
-    
+
     if (menuIndex==4) {
+      this.handleLock (e);
+    }                
+    
+    if (menuIndex==5) {
       this.handleLogout (e);
     }            
   }
@@ -107,14 +112,26 @@ export default class MenuBar extends React.Component {
   /**
    * 
    */  
-  handleLogout (e) {
-	  console.log ("handleLogout ()");
+  handleLock (e) {
+	  console.log ("handleLock ()");
 	    
     if (typeof this.props.onLogout === 'function') {
       this.props.onLogout(e.target.value);
     }    
   }	
   
+  /**
+   * 
+   */  
+  handleLogout (e) {
+    console.log ("handleLogout ()");
+      
+    if (typeof this.props.onLogout === 'function') {
+      this.props.onLogout(e.target.value);
+    }    
+  } 
+  
+
   /**
    * 
    */
@@ -238,7 +255,10 @@ export default class MenuBar extends React.Component {
                       <a href="#" onClick={(e) => this.chooseSetting (3,e)}>Show Hide Grid</a>
                   </li>
                   <li>
-                      <a href="#" onClick={(e) => this.chooseSetting (4,e)}>Log Out</a>
+                      <a href="#" onClick={(e) => this.chooseSetting (4,e)}>Lock Application</a>
+                  </li>                  
+                  <li>
+                      <a href="#" onClick={(e) => this.chooseSetting (5,e)}>Log Out</a>
                   </li>
               </ul>
             </DropdownContent>

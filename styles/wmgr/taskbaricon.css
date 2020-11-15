@@ -9,10 +9,13 @@
 
 .iconBaseSmall
 {
-  width: 32px;
-  height: 32px;
+  /*width: 16px;*/
+  height: 16px;
   padding: 4px;
   border: 0px solid grey;
+
+  display: flex;
+  flex-direction: row;
 }
 
 .iconBaseMedium:hover 
@@ -47,8 +50,8 @@
 
 .iconFaceSmall
 {
-  width: 32px;
-  height: 32px;
+  width: 16px;
+  height: 16px;
   padding: 0px;
   border: 0px solid green;
   margin: auto;
@@ -60,13 +63,11 @@
   /* font-family: Verdana, Geneva, sans-serif; */
   /* font-size: 60%; */
   /* color: #ffffff; */
-  background: #666666;
-  /* padding: 1px; */
-  border-radius: 4px 4px 4px 4px;
-  -moz-border-radius: 4px 4px 4px 4px;
-  -webkit-border-radius: 4px 4px 4px 4px;
+  /* background: #666666; */
+  padding: 2px;
+  padding-left: 6px;
   border: 0px solid #000000;
-  text-align: center;
+  text-align: left;
   font-size: 8pt;
   line-height: 10pt;
 }

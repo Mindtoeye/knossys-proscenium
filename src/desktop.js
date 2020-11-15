@@ -38,7 +38,7 @@ class Desktop extends React.Component {
     this.state={
       apps: [],
       drivers: [],
-      appState: 0,
+      appState: 2,
       appTimeout: 0,
       serviceState : {
         prosceniumEnabled: false,
@@ -64,7 +64,25 @@ class Desktop extends React.Component {
       console.log ("Initializing application manager ...");
       this.state.appManager.build();
     }
-    */
+    */    
+  }
+
+  /**
+   *
+   */
+  componentDidMount () {
+    console.log ("componentDidMount");
+
+    window.appManager.build();
+
+    //this.start ();
+  }
+
+  /**
+   *
+   */
+  start () {
+    console.log ("start ()");
 
     tId=setInterval (() => {
       let t=this.state.appTimeout;
@@ -117,15 +135,6 @@ class Desktop extends React.Component {
   }
 
   /**
-  *
-  */
-  componentDidMount () {
-    console.log ("componentDidMount");
-
-    window.appManager.build();
-  }  
-
-  /**
    *
    */
   setDriverData (newData, aCallback) {
@@ -154,6 +163,8 @@ class Desktop extends React.Component {
    *
    */
   setAppData (newData, aCallback) {
+    console.log ("setAppData ()");
+
     this.setState ({apps: newData}, () => {
       if (aCallback) {
         aCallback ();
@@ -204,7 +215,7 @@ class Desktop extends React.Component {
       return (<LoginDialog onLogin={this.onLogin.bind(this)} />);
     }    
 
-    return (<MainWindow appmanager={window.appManager} onLogout={this.onLogout.bind(this)} />);
+    return (<MainWindow appmanager={window.appManager} apps={this.state.apps} onLogout={this.onLogout.bind(this)} />);
   }
 }
 

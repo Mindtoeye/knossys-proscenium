@@ -189,7 +189,7 @@ class WindowManager extends React.Component {
    *
    */
   render() {
-    console.log ("WindowManager:render()");
+    //console.log ("WindowManager:render()");
 
     let windows=[];
     let zIndex=1;

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development --output ./dist/proscenium-dev.js",
     "build": "webpack --mode production --output ./dist/proscenium.js",
-    "start": "webpack-dev-server --mode development --host 0.0.0.0 --port 8082"
+    "start": "webpack-dev-server --mode development --host 0.0.0.0 --port 8079"
   },
   "repository": {
     "type": "git",
